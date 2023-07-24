@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import Counter from "../utils/Counter";
+import { useState } from "react";
 
 const LandingPage = () => {
+  const [mobileWindow, setMobileWindow] = useState(false);
   return (
     <div className="bg-white background-animation">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -44,9 +47,59 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="text-center mt-24">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 className="text-3xl font-bold tracking-tight nexa-font text-gray-900 sm:text-6xl">
             LearnT Learning
           </h1>
+          <p className="mt-3 text-lg leading-8 text-gray-600 typed-js-color"></p>
+          <p className="mt-11 text-lg leading-8 text-gray-600">
+            Embark on an adventure of learning, where every discovery enriches
+            the mind and empowers the soul to reach new heights.{" "}
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <Link
+              to="/user"
+              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Launch into learning
+            </Link>
+            <Link
+              to="/#"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Learn more <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </div>
+        <hr className="w-64 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 light:bg-gray-700" />
+        <div className="text-center">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 p-5 rounded-lg">
+            <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+              <div className="mx-auto flex max-w-xs flex-col gap-y-4 hero-stats">
+                <dt className="text-base leading-7 text-gray-600">
+                  Courses sold every week
+                </dt>
+                <dd className="order-first text-3xl font-semibold tracking-tight flex justify-center text-gray-900 sm:text-5xl">
+                  <Counter value={724} />
+                </dd>
+              </div>
+              <div className="mx-auto flex max-w-xs flex-col gap-y-4 hero-stats">
+                <dt className="text-base leading-7 text-gray-600">
+                  New users yearly
+                </dt>
+                <dd className="order-first text-3xl font-semibold tracking-tight flex justify-center text-gray-900 sm:text-5xl">
+                  <Counter value={704} />
+                </dd>
+              </div>
+              <div className="mx-auto flex max-w-xs flex-col gap-y-4 hero-stats">
+                <dt className="text-base leading-7 text-gray-600">
+                  New Tutors yearly
+                </dt>
+                <dd className="order-first text-3xl font-semibold tracking-tight flex justify-center text-gray-900 sm:text-5xl">
+                  <Counter value={744} />
+                </dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </div>
     </div>
