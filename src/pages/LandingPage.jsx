@@ -6,10 +6,37 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Typed from "typed.js";
+import Logo from "../components/common/Logo";
 
+const navigation = [
+  { name: "Home", href: "/#" },
+  { name: "Explore", href: "/#" },
+  { name: "Teach", href: "/#" },
+  { name: "Contact", href: "/#" },
+];
 const LandingPage = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
+  const el = useRef(null);
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [
+        "hai ,samle text",
+        "hai ,samle text",
+        "hai ,samle textvfd edfbghbvfgbcv ",
+        "hai ,samle text rgdfvnh trfgcvgf gdvf",
+        "hai ,samle text tgfv rdfcv fdc edfvc",
+        "hai ,samle text gfdvc tfdv rfdrdfv",
+      ],
+      typeSpeed: 80,
+      backDelay: 700,
+      smartBackspace: true,
+      backspeed: 20,
+      loop: true,
+      loopCount: Infinity,
+    });
+  }, []);
   return (
     <div className="bg-white background-animation">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -20,6 +47,7 @@ const LandingPage = () => {
           <div className="flex lg:flex-1">
             <div className="-m-1.5 p-1.5">
               <span className="sr-only">LearnT Learning</span>
+              <Logo />
             </div>
           </div>
           <div className="flex lg:hidden">
@@ -33,7 +61,17 @@ const LandingPage = () => {
               <span className="sr-only">Open main menu</span>
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">gffrg</div>
+          <div className="hidden lg:flex lg:gap-x-12">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-sm font-semibold leading-6  text-grey-900"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
               to="user/signin"
@@ -64,7 +102,17 @@ const LandingPage = () => {
               </div>
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">tutor</div>
+                  <div className="space-y-2 py-6">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Dialog.Panel>
@@ -82,11 +130,14 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="text-center mt-24">
-          <h1 className="text-3xl font-bold tracking-tight nexa-font text-gray-900 sm:text-6xl">
+        <div className="text-center mt-15">
+          <h1 className="text-3xl font-semibold tracking-tight nexa-font text-gray-900 sm:text-6xl">
             LearnT Learning
           </h1>
-          <p className="mt-3 text-lg leading-8 text-gray-600 typed-js-color"></p>
+          <p className="mt-3 text-lg leading-8 text-gray-600 typed-js-color">
+            {" "}
+            <span className="font-semibold" ref={el} />
+          </p>
           <p className="mt-11 text-lg leading-8 text-gray-600">
             Embark on an adventure of learning, where every discovery enriches
             the mind and empowers the soul to reach new heights.{" "}
