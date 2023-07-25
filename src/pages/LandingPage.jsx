@@ -11,7 +11,7 @@ import Typed from "typed.js";
 import Logo from "../components/common/Logo";
 
 const navigation = [
-  { name: "Home", href: "/#" },
+  { name: "Home", href: "/user" },
   { name: "Explore", href: "/#" },
   { name: "Teach", href: "/#" },
   { name: "Contact", href: "/#" },
@@ -36,7 +36,11 @@ const LandingPage = () => {
       loop: true,
       loopCount: Infinity,
     });
+    return () => {
+      typed.destroy(); //to destroy typed instance to stop and clean animation
+    };
   }, []);
+
   return (
     <div className="bg-white background-animation">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -130,7 +134,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="text-center mt-15">
+        <div className="text-center mt-12">
           <h1 className="text-3xl font-semibold tracking-tight nexa-font text-gray-900 sm:text-6xl">
             LearnT Learning
           </h1>
