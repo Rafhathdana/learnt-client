@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import Counter from "../utils/Counter";
+import { Dialog } from "@headlessui/react";
+import {
+  AcademicCapIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 const LandingPage = () => {
-  const [mobileWindow, setMobileWindow] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
   return (
     <div className="bg-white background-animation">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -20,7 +26,10 @@ const LandingPage = () => {
             <button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+              onClick={() => setMobileMenu(true)}
             >
+              {" "}
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               <span className="sr-only">Open main menu</span>
             </button>
           </div>
@@ -34,6 +43,33 @@ const LandingPage = () => {
             </Link>
           </div>
         </nav>
+        <Dialog className="lg:hidden" open={mobileMenu} onClose={setMobileMenu}>
+          <div className="fixed inset-0 z-50">
+            <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+              <div className="flex items-center justify-between">
+                <Link to="#" className="-m-1.5 p-1.5">
+                  <span className="flex items-center gap-2 border-2 border-blue-500 px-4 rounded-xl font-bold">
+                    <AcademicCapIcon class="h-8 w-8 text-blue-500" />
+                    LearnT
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                  onClick={() => setMobileMenu(false)}
+                >
+                  <span className="sr-only">Close menu</span>
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="mt-6 flow-root">
+                <div className="-my-6 divide-y divide-gray-500/10">
+                  <div className="space-y-2 py-6">tutor</div>
+                </div>
+              </div>
+            </Dialog.Panel>
+          </div>
+        </Dialog>
       </header>
       <div className="relateve isolate px-6 lg:px-8">
         <div className="mx-auto max-w-2xl py-6 pt-6 sm:pt-24 lg:pt-28">
