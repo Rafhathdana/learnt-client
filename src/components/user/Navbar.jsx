@@ -25,7 +25,7 @@ function Navbar() {
       fluid={true}
       rounded={true}
     >
-      <Logo className="mr-3" to={"/user"} />
+      <Logo className="mr-3" to={"/user"} size={1.3} />
       <div className="flex md:order-2">
         <Button>
           <Link to={`signin?from=${pathname}`}>Sign In</Link>

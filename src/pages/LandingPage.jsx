@@ -51,7 +51,7 @@ const LandingPage = () => {
           <div className="flex lg:flex-1">
             <div className="-m-1.5 p-1.5">
               <span className="sr-only">LearnT Learning</span>
-              <Logo />
+              <Logo size="1.3" />
             </div>
           </div>
           <div className="flex lg:hidden">
