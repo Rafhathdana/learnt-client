@@ -78,7 +78,7 @@ const LandingPage = () => {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
-              to="user/signin"
+              to="../signin"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               Sign in <span aria-hidden="true">&rarr;</span>

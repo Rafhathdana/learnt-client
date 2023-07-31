@@ -17,7 +17,7 @@ export default function SignIn() {
       <div className="flex nexa-font min-h-full flex-1 flex-col justify-center px-6 lg:px-8 h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size="1.7" />
+            <Logo size={1.7} tutor={true} to="/tutor" />
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in and Explore
@@ -45,7 +45,7 @@ export default function SignIn() {
                       [e.target.name]: e.target.value,
                     })
                   }
-                  className="block w-full nexa-font rounded-md border-0 py-1.5 px-1 text-grey-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full nexa-font rounded-md border-0 py-1.5 px-1 text-grey-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -60,7 +60,7 @@ export default function SignIn() {
                 <div className="text-sm">
                   <Link
                     to="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-amber-600 hover:text-amber-500"
                   >
                     Forgot password?
                   </Link>
@@ -79,7 +79,7 @@ export default function SignIn() {
                     })
                   }
                   required
-                  className="block nexa-font w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block nexa-font w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function SignIn() {
               </span>
             </div>
             <div>
-              <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1 5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <button className="flex w-full justify-center rounded-md bg-amber-600 px-3 py-1 5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600">
                 Sign in
               </button>
             </div>
@@ -98,7 +98,7 @@ export default function SignIn() {
             Ready to start exploring new perspectives?
             <Link
               to="../signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-amber-600 hover:text-amber-500"
             >
               Create An Account
             </Link>

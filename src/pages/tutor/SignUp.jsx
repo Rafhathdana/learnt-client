@@ -8,6 +8,7 @@ export default function SignUp() {
     email: "",
     password: "",
     phone: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +16,17 @@ export default function SignUp() {
   const handleOtp = (e) => {
     setIsLoading(true);
     e.preventDefault();
-    setOtpSection(true);
-    setIsLoading(false);
+    if (formValues.password === formValues.confirmPassword) {
+      // Passwords match, you can proceed with form submission or further processing
 
+      setOtpSection(true);
+      console.log("Passwords match!");
+    } else {
+      // Passwords do not match
+      setError("Password Miss Match");
+      console.log("Passwords do not match!");
+    }
+    setIsLoading(false);
     // userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
@@ -30,10 +39,10 @@ export default function SignUp() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size={1.4} />
+            <Logo size={1.7} tutor={true} to="/tutor" />
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create a new account
+            Create a new account as Tutor
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -60,7 +69,7 @@ export default function SignUp() {
                         })
                       }
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -84,7 +93,7 @@ export default function SignUp() {
                         })
                       }
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -108,7 +117,7 @@ export default function SignUp() {
                         })
                       }
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-grey-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -132,7 +141,7 @@ export default function SignUp() {
                         })
                       }
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -156,7 +165,7 @@ export default function SignUp() {
                         })
                       }
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -170,7 +179,7 @@ export default function SignUp() {
                     type="submit"
                     onClick={handleOtp}
                     {...(isLoading ? "disabled" : "")}
-                    className=" mt-5 flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-indigo-600"
+                    className=" mt-5 flex w-full justify-center items-center rounded-md bg-amber-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-amber-600"
                   >
                     {isLoading ? (
                       <>
@@ -208,7 +217,7 @@ export default function SignUp() {
                     type="submit"
                     onClick={handleSignUp}
                     {...(isLoading ? "disabled" : "")}
-                    className=" mt-5 flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-indigo-600"
+                    className=" mt-5 flex w-full justify-center items-center rounded-md bg-amber-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-amber-600"
                   >
                     {isLoading ? (
                       <>

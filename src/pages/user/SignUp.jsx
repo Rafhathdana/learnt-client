@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
 import Logo from "../../components/common/Logo";
 import Otp from "../../components/common/Otp";
+import { userSignUpAPI } from "../../api/user";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function SignUp() {
   const [formValues, setFormValues] = useState({
@@ -11,19 +14,39 @@ export default function SignUp() {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [otpSection, setOtpSection] = useState(false);
   const handleOtp = (e) => {
     setIsLoading(true);
     e.preventDefault();
-    setOtpSection(true);
-    setIsLoading(false);
-
+    userOtpSendAPI(formValues.email,formValues.phone) .then((data) => {
+      console.log(data);
+      setTimeout(() => {
+        setIsLoading(false);    
+        setOtpSection(true);
+      }, 1000);
+    })
     // userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
     setIsLoading(true);
-
-    alert(otpValues);
+    e.preventDefault();
+    userSignUpAPI(formValues)
+      .then((data) => {
+        console.log(data);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("../signin?new=true");
+        }, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.errors.message);
+        console.log("error", err.response);
+        setError(err.message?.data?.errors.message);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      });
   };
   return (
     <>
@@ -235,6 +258,21 @@ export default function SignUp() {
                       "Sign Up"
                     )}
                   </button>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mt-5">
+                    <span
+                      onClick={() => setOtpSection(false)}
+                      className="block font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
+                    >
+                      Back
+                    </span>
+                    <div className="text-sm">
+                      <div className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        Resend Otp
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

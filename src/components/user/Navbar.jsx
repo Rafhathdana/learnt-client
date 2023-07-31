@@ -9,7 +9,7 @@ function Navbar() {
   const normalnav = [
     { name: "Home", href: "/user" },
     { name: "Explore", href: "/explore" },
-    { name: "Teach", href: "/teach" },
+    { name: "Teach", href: "/tutor/" },
     { name: "Contact", href: "/contact" },
   ];
   const usernav = [
@@ -30,7 +30,7 @@ function Navbar() {
         <Button>
           <Link to={`signin?from=${pathname}`}>Sign In</Link>
         </Button>
-        {/* <NavBar.Toggle /> */}
+        <NavBar.Toggle />
       </div>
       <NavBar.Collapse>
         {navitems.map((item) => (
