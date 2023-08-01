@@ -2,11 +2,13 @@ import Navbar from "../src/components/user/Navbar";
 import { Route, Routes } from "react-router-dom";
 import SignIn from "../src/pages/user/SignIn";
 import SignUp from "../src/pages/user/SignUp";
+import { Toaster } from "react-hot-toast";
 
 export default function UserRoutes() {
   return (
     <div>
       <Navbar />
+      <Toaster />
       <Routes>
         {/* <Route path="user" element={<Home />} /> */}
         <Route path="signin" element={<SignIn />} />

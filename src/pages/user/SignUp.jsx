@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import Logo from "../../components/common/Logo";
 import Otp from "../../components/common/Otp";
-import { userSignUpAPI } from "../../api/user";
+import { userOtpSendAPI, userSignUpAPI } from "../../api/user";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -12,6 +12,10 @@ export default function SignUp() {
     password: "",
     phone: "",
   });
+  const [otpValues, setOtpValues] = useState("");
+  const handleOtpChange = (otp) => {
+    setOtpValues(otp); // Update the otpValues state in the SignUp component
+  };
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -19,19 +23,34 @@ export default function SignUp() {
   const handleOtp = (e) => {
     setIsLoading(true);
     e.preventDefault();
-    userOtpSendAPI(formValues.email,formValues.phone) .then((data) => {
-      console.log(data);
-      setTimeout(() => {
-        setIsLoading(false);    
-        setOtpSection(true);
-      }, 1000);
-    })
+    console.log("rafhath reached here");
+    userOtpSendAPI(formValues)
+      .then((data) => {
+        console.log(data);
+        setTimeout(() => {
+          setIsLoading(false);
+          setOtpSection(true);
+        }, 1000);
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.errors.message);
+        console.log("error", err.response);
+        setError(err.message?.data?.errors.message);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      });
     // userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
     setIsLoading(true);
     e.preventDefault();
-    userSignUpAPI(formValues)
+    const otp = otpValues.join("");
+    const formValuesWithOtp = {
+      ...formValues,
+      otp,
+    }; // Add otpValues to the formValues object
+    userSignUpAPI(formValuesWithOtp)
       .then((data) => {
         console.log(data);
         setTimeout(() => {
@@ -192,7 +211,7 @@ export default function SignUp() {
                   <button
                     type="submit"
                     onClick={handleOtp}
-                    {...(isLoading ? "disabled" : "")}
+                    disabled={isLoading}
                     className=" mt-5 flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     {isLoading ? (
@@ -200,7 +219,7 @@ export default function SignUp() {
                         <svg
                           aria-hidden="true"
                           role="status"
-                          class="inline w-4 h-4 mr-3 text-white animate-spin"
+                          className="inline w-4 h-4 mr-3 text-white animate-spin"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -225,12 +244,12 @@ export default function SignUp() {
             )}
             {otpSection && (
               <div>
-                <Otp />
+                <Otp onOtpChange={handleOtpChange} />
                 <div>
                   <button
                     type="submit"
                     onClick={handleSignUp}
-                    {...(isLoading ? "disabled" : "")}
+                    disabled={isLoading}
                     className=" mt-5 flex w-full justify-center items-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visisble:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     {isLoading ? (
@@ -262,7 +281,9 @@ export default function SignUp() {
                 <div>
                   <div className="flex items-center justify-between mt-5">
                     <span
-                      onClick={() => setOtpSection(false)}
+                      onClick={() => {
+                        setOtpSection(false), setIsLoading(false);
+                      }}
                       className="block font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
                     >
                       Back

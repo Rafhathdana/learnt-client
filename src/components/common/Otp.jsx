@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
+import PropTypes from "prop-types"; // Import prop-types library
 
-export default function Otp() {
+export default function Otp({ onOtpChange }) {
   const inputRefs = useRef([]);
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]); // Initialize an array to store OTP digits
   const handleOtpChange = (value, index) => {
     const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
-
+    onOtpChange(newOtpValues);
     // Move focus to the next input box if the current input is not empty
     if (value !== "" && inputRefs.current[index + 1]) {
       inputRefs.current[index + 1].focus();
@@ -47,3 +48,6 @@ export default function Otp() {
     </div>
   );
 }
+Otp.propTypes = {
+  onOtpChange: PropTypes.func.isRequired,
+};
