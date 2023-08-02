@@ -2,26 +2,26 @@ import { Toaster, toast } from "react-hot-toast";
 import Logo from "../../components/common/Logo";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { userSignInAPI } from "../../api/user";
+import { tutorSignInAPI } from "../../api/tutor";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../features/userSlice";
+import { setTutor } from "../../features/tutorSlice";
 
 export default function SignIn() {
-  const user = useSelector((state) => state.user);
+  const tutor = useSelector((state) => state.tutor);
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const accessedPrivate = searchParams.get("private");
   const fromLocation = searchParams.get("from");
   const sessionExpired = searchParams.get("expired");
-  const newUser = searchParams.get("new");
+  const newTutor = searchParams.get("new");
   const logout = searchParams.get("logout");
   useEffect(() => {
-    if (user.loggedIn) {
-      navigate("/user");
+    if (tutor.loggedIn) {
+      navigate("/tutor");
     }
-    if (newUser) {
+    if (newTutor) {
       toast.dismiss();
-      toast.success("Welcome to Learnt! Please Login", {
+      toast.success("Welcome to Learnt Tutor! Please Login", {
         duration: 2000,
       });
     }
@@ -50,22 +50,28 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const handleSignIn = (e) => {
     e.preventDefault();
-    userSignInAPI(formValues)
+    tutorSignInAPI(formValues)
       .then((response) => {
-        localStorage.setItem("isAuth", true);
+        console.log(response);
+        console.log(response.data, "dwsxa");
+        console.log(response.data.tutor, "dwcxzxsxa");
+
         toast.success(
-          `Hey ${response.data.user.name}, Welcome back To Learnt!`,
+          `Hey ${response.data.tutor.name}, Welcome back To Learnt!`,
           {
             duration: 6000,
           }
         );
         dispatch(
-          setUser({ ...response.data?.user, userId: response.data.user._id })
+          setTutor({
+            ...response.data?.tutor,
+            tutorId: response.data.tutor._id,
+          })
         );
         if (fromLocation) {
           return navigate(fromLocation);
         }
-        return navigate("/user");
+        return navigate("..");
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +86,7 @@ export default function SignIn() {
       <div className="flex nexa-font min-h-full flex-1 flex-col justify-center px-6 lg:px-8 h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size="1.7" />
+            <Logo size="1.7" tutor={true} to="/tutor" />
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in and Explore

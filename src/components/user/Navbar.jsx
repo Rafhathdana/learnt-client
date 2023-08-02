@@ -2,10 +2,11 @@ import { Button, Navbar as NavBar } from "flowbite-react";
 import React from "react";
 import Logo from "../common/Logo";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const { pathname } = useLocation();
-  let user = false;
+  const user = useSelector((state) => state.user);
   const normalnav = [
     { name: "Home", href: "/user" },
     { name: "Explore", href: "/explore" },
@@ -27,9 +28,13 @@ function Navbar() {
     >
       <Logo className="mr-3" to={"/user"} size={1.3} />
       <div className="flex md:order-2">
-        <Button>
-          <Link to={`signin?from=${pathname}`}>Sign In</Link>
-        </Button>
+        {user.loggedIn ? (
+          ""
+        ) : (
+          <Link to={`signin?from=${pathname}`}>
+            <Button>Sign In </Button>
+          </Link>
+        )}
         <NavBar.Toggle />
       </div>
       <NavBar.Collapse>

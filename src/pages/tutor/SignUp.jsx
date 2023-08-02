@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Logo from "../../components/common/Logo";
 import Otp from "../../components/common/Otp";
-import { userOtpSendAPI, userSignUpAPI } from "../../api/user";
+import { tutorOtpSendAPI, tutorSignUpAPI } from "../../api/tutor";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
@@ -24,7 +24,7 @@ export default function SignUp() {
     setIsLoading(true);
     e.preventDefault();
     console.log("rafhath reached here");
-    userOtpSendAPI(formValues)
+    tutorOtpSendAPI(formValues)
       .then((data) => {
         console.log(data);
         setTimeout(() => {
@@ -40,7 +40,6 @@ export default function SignUp() {
           setIsLoading(false);
         }, 500);
       });
-    userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
     setIsLoading(true);
@@ -50,7 +49,7 @@ export default function SignUp() {
       ...formValues,
       otp,
     }; // Add otpValues to the formValues object
-    userSignUpAPI(formValuesWithOtp)
+    tutorSignUpAPI(formValuesWithOtp)
       .then((data) => {
         console.log(data);
         setTimeout(() => {
@@ -72,7 +71,7 @@ export default function SignUp() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size={1.4} />
+            <Logo size={1.7} tutor={true} to="/tutor" />
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create a new account

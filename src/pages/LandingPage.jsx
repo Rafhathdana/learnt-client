@@ -91,7 +91,7 @@ const LandingPage = () => {
               <div className="flex items-center justify-between">
                 <Link to="#" className="-m-1.5 p-1.5">
                   <span className="flex items-center gap-2 border-2 border-blue-500 px-4 rounded-xl font-bold">
-                    <AcademicCapIcon class="h-8 w-8 text-blue-500" />
+                    <AcademicCapIcon className="h-8 w-8 text-blue-500" />
                     LearnT
                   </span>
                 </Link>

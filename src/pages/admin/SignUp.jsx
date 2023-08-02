@@ -40,7 +40,6 @@ export default function SignUp() {
           setIsLoading(false);
         }, 500);
       });
-    userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
     setIsLoading(true);
