@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Logo from "../../components/common/Logo";
 import Otp from "../../components/common/Otp";
 import { userOtpSendAPI, userSignUpAPI } from "../../api/user";
@@ -40,7 +40,7 @@ export default function SignUp() {
           setIsLoading(false);
         }, 500);
       });
-    // userOtpAPI(formValues);
+    userOtpAPI(formValues);
   };
   const handleSignUp = (e) => {
     setIsLoading(true);
