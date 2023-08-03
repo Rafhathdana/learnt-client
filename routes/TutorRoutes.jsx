@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import SignIn from "../src/pages/tutor/SignIn";
 import SignUp from "../src/pages/tutor/SignUp";
 import { Toaster } from "react-hot-toast";
+import Home from "../src/pages/tutor/Home";
+import NotFound from "../src/pages/NotFound";
 
 export default function TutorRoutes() {
   return (
@@ -10,9 +12,10 @@ export default function TutorRoutes() {
       <Navbar />
       <Toaster />
       <Routes>
-        {/* <Route path="tutor" element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
