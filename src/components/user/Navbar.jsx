@@ -3,7 +3,7 @@ import React from "react";
 import Logo from "../common/Logo";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import MenuDropDown from "../user/MenuDropDown";
 function Navbar() {
   const { pathname } = useLocation();
   const user = useSelector((state) => state.user);
@@ -29,7 +29,7 @@ function Navbar() {
       <Logo className="mr-3" to={"/user"} size={1.3} />
       <div className="flex md:order-2">
         {user.loggedIn ? (
-          ""
+          <MenuDropDown />
         ) : (
           <Link to={`signin?from=${pathname}`}>
             <Button>Sign In </Button>

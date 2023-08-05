@@ -2,24 +2,24 @@ import { Toaster, toast } from "react-hot-toast";
 import Logo from "../../components/common/Logo";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { userSignInAPI } from "../../api/user";
+import { adminSignInAPI } from "../../api/admin";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../features/userSlice";
+import { setAdmin } from "../../features/adminSlice";
 
 export default function SignIn() {
-  const user = useSelector((state) => state.user);
+  const admin = useSelector((state) => state.admin);
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const accessedPrivate = searchParams.get("private");
   const fromLocation = searchParams.get("from");
   const sessionExpired = searchParams.get("expired");
-  const newUser = searchParams.get("new");
+  const newAdmin = searchParams.get("new");
   const logout = searchParams.get("logout");
   useEffect(() => {
-    if (user.loggedIn) {
-      navigate("/user");
+    if (admin.loggedIn) {
+      navigate("/admin");
     }
-    if (newUser) {
+    if (newAdmin) {
       toast.dismiss();
       toast.success("Welcome to Learnt! Please Login", {
         duration: 2000,
@@ -50,22 +50,22 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const handleSignIn = (e) => {
     e.preventDefault();
-    userSignInAPI(formValues)
+    adminSignInAPI(formValues)
       .then((response) => {
         localStorage.setItem("isAuth", true);
         toast.success(
-          `Hey ${response.data.user.name}, Welcome back To Learnt!`,
+          `Hey ${response.data.admin.name}, Welcome back To Learnt!`,
           {
             duration: 6000,
           }
         );
         dispatch(
-          setUser({ ...response.data?.user, userId: response.data.user._id })
+          setAdmin({ ...response.data?.admin, adminId: response.data.admin._id })
         );
         if (fromLocation) {
           return navigate(fromLocation);
         }
-        return navigate("/user");
+        return navigate("/admin");
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +80,7 @@ export default function SignIn() {
       <div className="flex nexa-font min-h-full flex-1 flex-col justify-center px-6 lg:px-8 h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size="1.7" />
+            <Logo size="1.7" admin/>
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in and Explore
