@@ -21,7 +21,7 @@ export default function TutorAdvantages() {
       <SectionTitle
         title="Why Here?"
         description="Empower Your Teaching  with Learnt."
-        tutor="true"
+        tutor
       />
       <HorizontalRule />
     </>

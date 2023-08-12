@@ -1,11 +1,13 @@
 import SectionTitle from "../../components/common/SectionTitle";
 import HorizontalRule from "../../components/common/HorizontalRule";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import courseSchema from "../../utils/validation/course.schema";
+import { createCourseAPI } from "../../api/tutor";
+
 export default function CreateCourse() {
   const [categories, setCategories] = useState([
     {
@@ -25,8 +27,10 @@ export default function CreateCourse() {
       title: "dvccsdxz",
     },
   ]);
-  const [imageError, setimageError] = useState(null);
+  const [imageError, setImageError] = useState(null);
   const navigate = useNavigate();
+  const [imagePreviewURL, setImagePreviewURL] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -37,7 +41,73 @@ export default function CreateCourse() {
     resolver: yupResolver(courseSchema),
   });
 
-  const onSubmit = async () => {};
+  const validateImage = (file) => {
+    setImagePreviewURL(null);
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      setImageError("invalid file type");
+      console.log("invalid file type");
+      return false;
+    }
+    const maxSize = 1024 * 1024;
+    if (file.size > maxSize) {
+      setImageError("file size exceeds limits of 1MB");
+      console.log("file size exceeds limit of 1 mb");
+      return false;
+    }
+    setImageError(null);
+    return true;
+  };
+  useEffect(() => {
+    let fileReader;
+    if (watch("thumbnail")[0] && validateImage(watch("thumbnail")[0])) {
+      if (watch("thumbnail")[0]) {
+        fileReader = new FileReader();
+        fileReader.onload = (e) => {
+          const { result } = e.target;
+          if (result) setImagePreviewURL(result);
+        };
+        fileReader.readAsDataURL(watch("thumbnail")[0]);
+      }
+      return () => {
+        if (fileReader && fileReader.readyState === 1) {
+          console.log("aborted");
+          fileReader.abort();
+        }
+      };
+    }
+  }, [watch("thumbnail")]);
+  const onSubmit = async (data, e) => {
+    if (imageError) {
+      console.log("please upload correct thumbnail");
+      return false;
+    }
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("tagline", data.tagline);
+    formData.append("about", data.about);
+    formData.append("price", data.price);
+    formData.append("category", data.category);
+    formData.append("difficulty", data.difficulty);
+    formData.append("thumbnail", Array.from(data.thumbnail)[0]);
+
+    createCourseAPI(formData)
+      .then((response) => {
+        reset();
+        console.log(response);
+        if (confirm("Course Created Successfully")) {
+          console.log("yes");
+          navigate("/tutor");
+        } else {
+          console.log("no");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("error occured while creating course" + error.message);
+      });
+  };
   return (
     <>
       <SectionTitle
@@ -216,6 +286,7 @@ export default function CreateCourse() {
                           name="about"
                           id="about"
                           rows={3}
+                          {...register("about")}
                           className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
                             errors.about?.message &&
                             "ring-red-600 ring-1 rounded-md"
@@ -242,8 +313,8 @@ export default function CreateCourse() {
                           />
                           <div className="mt-4 flex text-sm leading-6 text-gray-600">
                             <label
-                              htmlFor=""
-                              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2  focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                              htmlFor="file-upload"
+                              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                             >
                               <span>Upload a file</span>
                               <input
@@ -284,6 +355,58 @@ export default function CreateCourse() {
             {/* done course creating area */}
           </div>
           {/* now below it will view what you editted  */}
+          <div className="lg:w-1/2 mb-10 lg:mb-1 flex justify-center">
+            <div>
+              <SectionTitle
+                title="Course Preview"
+                description="This is how your course will look like"
+              />
+              <div
+                style={{ flexShrink: 0, scrollSnapAlign: "start" }}
+                className="w-full max-w-sm block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-10"
+              >
+                <div className="overflow-hidden">
+                  <Link to="#">
+                    <img
+                      src={
+                        imagePreviewURL
+                          ? imagePreviewURL
+                          : "https://archive.org/download/no-photo-available/no-photo-available.png"
+                      }
+                      style={{ minHeight: "286px", objectFit: "cover" }}
+                      alt="course thumbnail"
+                      className="rounded-t-lg duration-300 scale-105 hover:scale-100"
+                    />
+                  </Link>
+                </div>
+                <div className="px-5 pb-5">
+                  <Link to="#">
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-400 dark:text-white nexa-font">
+                      {watch("title") ? watch("title") : "Attractive Title"}
+                    </h5>
+                    <h5 className="text-sm font-semibold tracking-tight text-gray-400 dark:text-white nexa-font">
+                      {watch("tagline")
+                        ? watch("tagline")
+                        : "A tagline for your course"}
+                    </h5>
+                  </Link>
+                  <div className="flex items-center justify-between">
+                    <div className="flex flex-col items-start justify-start">
+                      <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                        ₹{watch("price") ? watch("price") : "0"}
+                      </span>
+                    </div>
+                    <Link
+                      to="#"
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue=300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                      Buy Course
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

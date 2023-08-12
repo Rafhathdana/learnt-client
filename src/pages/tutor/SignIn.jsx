@@ -55,6 +55,7 @@ export default function SignIn() {
         console.log(response);
         console.log(response.data, "dwsxa");
         console.log(response.data.tutor, "dwcxzxsxa");
+        localStorage.setItem("isTutorAuth", true);
 
         toast.success(
           `Hey ${response.data.tutor.name}, Welcome back To Learnt!`,
@@ -62,6 +63,7 @@ export default function SignIn() {
             duration: 6000,
           }
         );
+
         dispatch(
           setTutor({
             ...response.data?.tutor,

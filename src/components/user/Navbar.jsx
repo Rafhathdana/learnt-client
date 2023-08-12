@@ -29,7 +29,7 @@ function Navbar() {
       <Logo className="mr-3" to={"/user"} size={1.3} />
       <div className="flex md:order-2">
         {user.loggedIn ? (
-          <MenuDropDown />
+          <MenuDropDown className="w-3" user={user} />
         ) : (
           <Link to={`signin?from=${pathname}`}>
             <Button>Sign In </Button>

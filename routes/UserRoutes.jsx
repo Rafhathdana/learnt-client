@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSignedInUserAPI } from "../src/api/user";
 import { setUser } from "../src/features/userSlice";
+import Profile from "../src/pages/user/Profile";
 
 export default function UserRoutes() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function UserRoutes() {
         <Route path="user" element={<Home />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

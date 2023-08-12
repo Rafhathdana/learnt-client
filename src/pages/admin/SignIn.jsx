@@ -50,9 +50,10 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const handleSignIn = (e) => {
     e.preventDefault();
+
     adminSignInAPI(formValues)
       .then((response) => {
-        localStorage.setItem("isAuth", true);
+        localStorage.setItem("adminIsAuth", true);
         toast.success(
           `Hey ${response.data.admin.name}, Welcome back To Learnt!`,
           {
@@ -60,7 +61,10 @@ export default function SignIn() {
           }
         );
         dispatch(
-          setAdmin({ ...response.data?.admin, adminId: response.data.admin._id })
+          setAdmin({
+            ...response.data?.admin,
+            adminId: response.data.admin._id,
+          })
         );
         if (fromLocation) {
           return navigate(fromLocation);
@@ -80,7 +84,7 @@ export default function SignIn() {
       <div className="flex nexa-font min-h-full flex-1 flex-col justify-center px-6 lg:px-8 h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <Logo size="1.7" admin/>
+            <Logo size="1.7" admin />
           </div>
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in and Explore
