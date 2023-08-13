@@ -1,15 +1,15 @@
-import Navbar from "../src/components/user/Navbar";
+import Navbar from "../components/user/Navbar";
 import { Route, Routes } from "react-router-dom";
-import SignIn from "../src/pages/user/SignIn";
-import SignUp from "../src/pages/user/SignUp";
+import SignIn from "../pages/user/SignIn";
+import SignUp from "../pages/user/SignUp";
 import { Toaster } from "react-hot-toast";
-import NotFound from "../src/pages/NotFound";
-import Home from "../src/pages/user/Home";
+import NotFound from "../pages/NotFound";
+import Home from "../pages/user/Home";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getSignedInUserAPI } from "../src/api/user";
-import { setUser } from "../src/features/userSlice";
-import Profile from "../src/pages/user/Profile";
+import { getSignedInUserAPI } from "../api/user";
+import { setUser } from "../features/userSlice";
+import Profile from "../pages/user/Profile";
 
 export default function UserRoutes() {
   const dispatch = useDispatch();

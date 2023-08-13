@@ -2,9 +2,9 @@ import "./App.css";
 import "flowbite";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
-import UserRoutes from "../routes/UserRoutes";
-import TutorRoutes from "../routes/TutorRoutes";
-import AdminRoutes from "../routes/AdminRoutes";
+import UserRoutes from "./routes/UserRoutes";
+import TutorRoutes from "./routes/TutorRoutes";
+import AdminRoutes from "./routes/AdminRoutes";
 
 function App() {
   return (

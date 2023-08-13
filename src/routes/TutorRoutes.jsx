@@ -1,16 +1,16 @@
-import Navbar from "../src/components/tutor/Navbar";
+import Navbar from "../components/tutor/Navbar";
 import { Route, Routes } from "react-router-dom";
-import SignIn from "../src/pages/tutor/SignIn";
-import SignUp from "../src/pages/tutor/SignUp";
+import SignIn from "../pages/tutor/SignIn";
+import SignUp from "../pages/tutor/SignUp";
 import { Toaster } from "react-hot-toast";
-import Home from "../src/pages/tutor/Home";
-import NotFound from "../src/pages/NotFound";
-import CreateCourse from "../src/pages/tutor/CreateCourse";
-import { PrivateTutor } from "../src/components/authorization/PrivateAccess";
+import Home from "../pages/tutor/Home";
+import NotFound from "../pages/NotFound";
+import CreateCourse from "../pages/tutor/CreateCourse";
+import { PrivateTutor } from "../components/authorization/PrivateAccess";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getSignedInTutorAPI } from "../src/api/tutor";
-import { removeTutor, setTutor } from "../src/features/tutorSlice";
+import { getSignedInTutorAPI } from "../api/tutor";
+import { removeTutor, setTutor } from "../features/tutorSlice";
 
 export default function TutorRoutes() {
   const dispatch = useDispatch();

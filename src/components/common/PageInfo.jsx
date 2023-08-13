@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const PageInfo = ({ pageName }) => {
+const PageInfo = ({ pageName, tutor = false, admin = false }) => {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <h2 className="text-title-md-2 font-semibold text-primary dark:text-white">
@@ -9,7 +9,9 @@ const PageInfo = ({ pageName }) => {
       <nav>
         <ol className="flex items-center gap-2">
           <li>
-            <Link to="/user">Home</Link>
+            <Link to={`${tutor ? "tutor" : admin ? "/admin`" : "/user"} `}>
+              Home
+            </Link>
           </li>
           <li className="text-primary">{pageName}</li>
         </ol>

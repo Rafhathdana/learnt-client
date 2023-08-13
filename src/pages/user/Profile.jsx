@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileLayout from "../../components/user/ProfileLayout";
-import PageInfo from "../../components/user/PageInfo";
+import PageInfo from "../../components/common/PageInfo";
 import {
   ExclamationCircleIcon,
   LockClosedIcon,

@@ -5,6 +5,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { adminSignInAPI } from "../../api/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setAdmin } from "../../features/adminSlice";
+import Navbar from "../../components/admin/Navbar";
 
 export default function SignIn() {
   const admin = useSelector((state) => state.admin);
@@ -78,6 +79,7 @@ export default function SignIn() {
   };
   return (
     <>
+      <Navbar />
       <div>
         <Toaster />
       </div>
