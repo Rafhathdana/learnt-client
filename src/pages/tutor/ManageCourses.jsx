@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SectionTitle from "../../components/common/SectionTitle";
 import HorizontalRule from "../../components/common/HorizontalRule";
 import CourseCard from "../../components/tutor/CourseCard";
+import { getAllCoursesByTutorAPI } from "../../api/tutor";
 
 export default function ManageCourses() {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {});
+  useEffect(() => {
+    getAllCoursesByTutorAPI()
+      .then((response) => {
+        setCourses(response.data?.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <SectionTitle

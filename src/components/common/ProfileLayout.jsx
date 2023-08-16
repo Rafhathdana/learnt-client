@@ -12,8 +12,8 @@ const sidebarMenu = [
   { title: "Profile1", link: "/hjbmn", icon: <UserCircleIcon /> },
   { title: "Profile2", link: "/", icon: <UserCircleIcon /> },
 ];
-export default function ProfileLayout({ children }) {
-  const user = useSelector((state) => state.user);
+export default function ProfileLayout({ children, tutor = false }) {
+  const user = useSelector((state) => (tutor ? state.tutor : state.user));
   const { pathname } = useLocation();
   const [mobileFilterOpen, setmobileFilterOpen] = useState(false);
   return (

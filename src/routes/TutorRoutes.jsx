@@ -11,6 +11,9 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getSignedInTutorAPI } from "../api/tutor";
 import { removeTutor, setTutor } from "../features/tutorSlice";
+import ManageCourses from "../pages/tutor/ManageCourses";
+import CourseLesson from "../pages/tutor/CourseLesson";
+import Profile from "../pages/tutor/Profile";
 
 export default function TutorRoutes() {
   const dispatch = useDispatch();
@@ -18,7 +21,7 @@ export default function TutorRoutes() {
     getSignedInTutorAPI()
       .then((response) => {
         let tutorData = response.data?.tutorData || null;
-
+        console.log(tutorData);
         if (!tutorData) {
           console.log("user not logged in");
           localStorage.removeItem("isTutorAuth");
@@ -43,6 +46,9 @@ export default function TutorRoutes() {
       <Routes>
         <Route element={<PrivateTutor />}>
           <Route path="/courses/create" element={<CreateCourse />} />
+          <Route path="/courses" element={<ManageCourses />} />
+          <Route path="/courses/:id" element={<CourseLesson />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="signin" element={<SignIn />} />

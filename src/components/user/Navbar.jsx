@@ -17,7 +17,7 @@ function Navbar() {
     { name: "Home", href: "/user" },
     { name: "Explore", href: "/explore" },
     { name: "Enrolled", href: "/enrolled" },
-    { name: "Profile", href: "/profile" },
+    { name: "Profile", href: "/user/profile" },
   ];
   let navitems = user?.loggedIn ? usernav : normalnav;
   return (

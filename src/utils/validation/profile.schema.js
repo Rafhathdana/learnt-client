@@ -5,12 +5,6 @@ const URLRegex =
 
 const profileSchema = yup.object({
   name: yup.string().trim().required().min(3).max(25),
-  email: yup.string().trim().email().required(),
-  phone: yup
-    .string()
-    .matches(/^[0-9]+$/, "Invalid Phone Number")
-    .length(10)
-    .required(),
   about: yup.string().optional(),
   website: yup
     .string()
@@ -42,7 +36,7 @@ const profileSchema = yup.object({
       return URLRegex.test(value.trim());
     })
     .optional(),
-  occupation: yup.string().optional(),
+  occupation: yup.string().min(1).optional(),
 });
 
 export default profileSchema;

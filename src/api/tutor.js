@@ -13,7 +13,25 @@ const createCourseAPI = (body, route = `/tutor/courses/create`) => {
     },
   });
 };
-const getAllCoursesByTutorAPI = () => API;
+const createLessonAPI = (body, route = `/tutor/lessons`) => {
+  return API.post(route, body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const getAllCoursesByTutorAPI = (route = "/tutor/courses") => {
+  return API.get(route);
+};
+const getCourseDetailsAPI = (id, route = "/tutor/courses/") => {
+  return API.get(route + id);
+};
+
+// tutor profile
+const getTutorDetailsAPI = () => API.get("/tutor/details");
+const updateTutorDetailsAPI = (body) => API.post("/tutor/details", body);
+
 export {
   tutorSignInAPI,
   tutorSignUpAPI,
@@ -22,4 +40,8 @@ export {
   handleTutorLogOutAPI,
   createCourseAPI,
   getAllCoursesByTutorAPI,
+  createLessonAPI,
+  getCourseDetailsAPI,
+  getTutorDetailsAPI,
+  updateTutorDetailsAPI,
 };

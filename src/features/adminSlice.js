@@ -9,14 +9,14 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: initialState,
   reducers: {
-    setTutor: (state, action) => {
+    setAdmin: (state, action) => {
       console.log(action);
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.adminId = action.payload._id;
       state.loggedIn = true;
     },
-    removeTutor: (state) => {
+    removeAdmin: (state) => {
       state.name = null;
       state.email = null;
       state.adminId = null;

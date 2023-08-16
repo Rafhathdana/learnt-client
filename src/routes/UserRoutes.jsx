@@ -10,6 +10,9 @@ import { useEffect } from "react";
 import { getSignedInUserAPI } from "../api/user";
 import { setUser } from "../features/userSlice";
 import Profile from "../pages/user/Profile";
+import Explore from "../pages/user/Explore";
+import Course from "../pages/user/Course";
+import { PrivateUser } from "../components/authorization/PrivateAccess";
 
 export default function UserRoutes() {
   const dispatch = useDispatch();
@@ -41,7 +44,12 @@ export default function UserRoutes() {
         <Route path="user" element={<Home />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="profile" element={<Profile />} />
+        {/* <Route path="profile" element={<Profile />} /> */}
+        <Route path="explore" element={<Explore />} />
+        <Route path="course/:id" element={<Course />} />
+        <Route element={<PrivateUser />}>
+          <Route path="user/profile" element={<Profile />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

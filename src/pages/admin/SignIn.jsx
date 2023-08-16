@@ -17,6 +17,7 @@ export default function SignIn() {
   const newAdmin = searchParams.get("new");
   const logout = searchParams.get("logout");
   useEffect(() => {
+    console.log(admin);
     if (admin.loggedIn) {
       navigate("/admin");
     }
@@ -54,7 +55,7 @@ export default function SignIn() {
 
     adminSignInAPI(formValues)
       .then((response) => {
-        localStorage.setItem("adminIsAuth", true);
+        localStorage.setItem("isAdminAuth", true);
         toast.success(
           `Hey ${response.data.admin.name}, Welcome back To Learnt!`,
           {

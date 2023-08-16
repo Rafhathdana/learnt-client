@@ -10,16 +10,15 @@ import { Switch } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "../../utils/validation/profile.schema";
-import { getUserDetailsAPI, updateUserDetailsAPI } from "../../api/user";
+import { getTutorDetailsAPI, updateTutorDetailsAPI } from "../../api/tutor";
 import { toast } from "react-hot-toast";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function Profile() {
   const [editMode, setEditMode] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
+  const [tutorDetails, setTutorDetails] = useState({});
   const [error, setError] = useState(null);
-  const [agreed, setAgreed] = useState(false);
   const {
     register,
     handleSubmit,
@@ -31,37 +30,38 @@ export default function Profile() {
   });
   useEffect(() => {
     console.log("mounted");
-    getUserDetailsAPI()
+    getTutorDetailsAPI()
       .then((response) => {
-        const userDetails = response.data.userDetails;
-        setUserDetails({
-          name: userDetails.name,
-          website: userDetails.website,
-          age: userDetails.age,
-          about: userDetails.about,
-          address: userDetails.address,
-          gitLink: userDetails.gitLink,
-          linkedinLink: userDetails.linkedinLink,
-          occupation: userDetails.occupation,
-          visible: userDetails.visible,
+        const tutorDetails = response.data.tutorDetails;
+        setTutorDetails({
+          name: tutorDetails.name,
+          website: tutorDetails.website,
+          age: tutorDetails.age,
+          about: tutorDetails.about,
+          address: tutorDetails.address,
+          gitLink: tutorDetails.gitLink,
+          linkedinLink: tutorDetails.linkedinLink,
+          occupation: tutorDetails.occupation,
+          qualification: tutorDetails.qualification,
+          skills: tutorDetails.skills,
         });
-        setAgreed(userDetails.visible);
-        setValue("name", userDetails.name);
-        setValue("website", userDetails.website);
-        setValue("age", userDetails.age);
-        setValue("about", userDetails.about);
-        setValue("address", userDetails.address);
-        setValue("gitLink", userDetails.gitLink);
-        setValue("linkedinLink", userDetails.linkedinLink);
-        setValue("occupation", userDetails.occupation);
+        setValue("name", tutorDetails.name);
+        setValue("website", tutorDetails.website);
+        setValue("age", tutorDetails.age);
+        setValue("about", tutorDetails.about);
+        setValue("address", tutorDetails.address);
+        setValue("gitLink", tutorDetails.gitLink);
+        setValue("linkedinLink", tutorDetails.linkedinLink);
+        setValue("occupation", tutorDetails.occupation);
+        setValue("qualification", tutorDetails.qualification);
+        setValue("skills", tutorDetails.skills);
       })
       .catch((err) => console.log(err));
   }, []);
   const handleOnSubmit = (data) => {
     setError(null);
-    data.visible = agreed;
     const newData = JSON.parse(JSON.stringify(data));
-    const oldData = JSON.parse(JSON.stringify(userDetails));
+    const oldData = JSON.parse(JSON.stringify(tutorDetails));
     const sortedNewData = JSON.stringify(newData, Object.keys(newData).sort());
     const sortedOldData = JSON.stringify(oldData, Object.keys(oldData).sort());
     if (sortedNewData === sortedOldData) {
@@ -70,7 +70,7 @@ export default function Profile() {
       );
       return;
     }
-    updateUserDetailsAPI(data)
+    updateTutorDetailsAPI(data)
       .then((response) => {
         toast.success("Profile Updated Successfully", {
           duration: 3000,
@@ -83,7 +83,7 @@ export default function Profile() {
       });
   };
   return (
-    <ProfileLayout>
+    <ProfileLayout tutor>
       <PageInfo pageName={"profile"} />
       <div className="isolate bg-white px-6 lg:px-8">
         <div className="mx-auto max-w-2xl relative text-center">
@@ -151,7 +151,7 @@ export default function Profile() {
                   type="text"
                   id="name"
                   autoComplete="off"
-                  placeholder={userDetails.name}
+                  placeholder={tutorDetails.name}
                   {...register("name")}
                   className={classNames(
                     errors.name
@@ -182,7 +182,7 @@ export default function Profile() {
                   name="age"
                   {...(editMode ? null : { disabled: true })}
                   id="age"
-                  placeholder={userDetails.age}
+                  placeholder={tutorDetails.age}
                   {...register("age")}
                   className={classNames(
                     errors.age
@@ -198,10 +198,56 @@ export default function Profile() {
             </div>
             <div className="sm:col-span-2">
               <label
+                htmlFor="qualification"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                Qualification
+                <span className="text-xs ml-3 mb-1 text-gray-400 text-end">
+                  (optional)
+                </span>
+              </label>
+              <div className="mt-2 5">
+                <div className="relative flex items-center">
+                  {errors?.qualification && (
+                    <ExclamationCircleIcon className="text-red-700 absolute w-6 text-center z-1 right-1" />
+                  )}
+                  <input
+                    {...(editMode ? null : { disabled: true })}
+                    type="text"
+                    id="qualification"
+                    autoComplete="off"
+                    placeholder={tutorDetails.qualification}
+                    {...register("qualification")}
+                    className={classNames(
+                      errors.qualification
+                        ? "ring-red-600 rounded-md focus:ring-red-600"
+                        : "ring-gray-300 focus:ring-indigo-600",
+                      "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                    )}
+                  />
+                </div>
+                <p className="text-red-600 nexa-font text-xs mt-2 ml-1">
+                  {errors.qualification?.message}
+                </p>
+                {watch("qualification") && !errors.qualification && (
+                  <a
+                    href={watch("qualification")}
+                    className="focus:animate-ping-once relative items-center text-primary hover:text-indigo-800 text-xs py-2 pl-4 bg-gray-100 flex rounded"
+                  >
+                    {watch("qualification")}
+                  </a>
+                )}
+              </div>
+            </div>
+            <div className="sm:col-span-2">
+              <label
                 htmlFor="occupation"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
                 Occupation
+                <span className="text-xs ml-3 mb-1 text-gray-400 text-end">
+                  (optional)
+                </span>
               </label>
               <div className="mt-2.5">
                 <input
@@ -209,7 +255,7 @@ export default function Profile() {
                   type="text"
                   id="occupation"
                   autoComplete="off"
-                  placeholder={userDetails.occupation}
+                  placeholder={tutorDetails.occupation}
                   {...register("occupation")}
                   className={classNames(
                     errors.occupation
@@ -221,6 +267,36 @@ export default function Profile() {
               </div>
               <p className="text-red-600 nexa-font text-xs mt-2 ml-1">
                 {errors.occupation?.message}
+              </p>
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="skills"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                Skills
+                <span className="text-xs ml-3 mb-1 text-gray-400 text-end">
+                  (optional)
+                </span>
+              </label>
+              <div className="mt-2.5">
+                <input
+                  {...(editMode ? null : { disabled: true })}
+                  type="text"
+                  id="skills"
+                  autoComplete="off"
+                  placeholder={tutorDetails.skills}
+                  {...register("skills")}
+                  className={classNames(
+                    errors.skills
+                      ? "ring-red-600 rounded-md focus:ring-red-600"
+                      : "ring-gray-300 focus:ring-indigo-600",
+                    "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset  placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
+                  )}
+                />
+              </div>
+              <p className="text-red-600 nexa-font text-xs mt-2 ml-1">
+                {errors.skills?.message}
               </p>
             </div>
             <div className="col-span-full">
@@ -240,7 +316,7 @@ export default function Profile() {
                   {...(editMode ? null : { disabled: true })}
                   rows={3}
                   {...register("address")}
-                  placeholder={userDetails.address}
+                  placeholder={tutorDetails.address}
                   className={`block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${
                     errors.address?.message && "ring-red-600 ring-1 rounded-md"
                   }`}
@@ -268,7 +344,7 @@ export default function Profile() {
                 name="message"
                 id="message"
                 autoComplete="off"
-                placeholder={userDetails.about}
+                placeholder={tutorDetails.about}
                 rows={4}
                 {...register("about")}
                 className={classNames(
@@ -305,7 +381,7 @@ export default function Profile() {
                   type="text"
                   id="website"
                   autoComplete="off"
-                  placeholder={userDetails.website}
+                  placeholder={tutorDetails.website}
                   {...register("website")}
                   className={classNames(
                     errors.website
@@ -348,7 +424,7 @@ export default function Profile() {
                     type="text"
                     id="gitLink"
                     autoComplete="off"
-                    placeholder={userDetails.gitLink}
+                    placeholder={tutorDetails.gitLink}
                     {...register("gitLink")}
                     className={classNames(
                       errors.gitLink
@@ -391,7 +467,7 @@ export default function Profile() {
                     type="text"
                     id="linkedinLink"
                     autoComplete="off"
-                    placeholder={userDetails.linkedinLink}
+                    placeholder={tutorDetails.linkedinLink}
                     {...register("linkedinLink")}
                     className={classNames(
                       errors.linkedinLink
@@ -414,35 +490,6 @@ export default function Profile() {
                 )}
               </div>
             </div>
-            <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
-              <div className="flex h-6 items-center">
-                <Switch
-                  checked={agreed}
-                  {...(editMode ? null : { disabled: true })}
-                  onChange={setAgreed}
-                  className={classNames(
-                    agreed ? "bg-indigo-600" : "bg-gray-200",
-                    "flex w-8 flex-none cursor-pointer rounded-full p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  )}
-                >
-                  <span className="sr-only">Agree to policies</span>
-                  <span
-                    aria-hidden="true"
-                    className={classNames(
-                      agreed ? "translate-x-3.5" : "translate-x-0",
-                      "h-4 w-4 transform rounded-full bg-white shadow-sm ring-1 ring-gray-900/5 transition duration-200 ease-in-out"
-                    )}
-                  />
-                </Switch>
-              </div>
-              <Switch.Label className="text-sm leading-6 text-gray-600">
-                By selecting this, you agree to make your{" "}
-                <a href="#" className="font-semibold text-indigo-600">
-                  profile&nbsp;public
-                </a>
-                .
-              </Switch.Label>
-            </Switch.Group>
           </div>
           <div className="flex justify-center"></div>
           <div className="mt-10">

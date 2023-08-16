@@ -9,15 +9,13 @@ import {
 } from "../../api/admin";
 import timeAgo from "../../utils/timeAgo";
 
-const TableList = ({ tutor = false }) => {
+const AdminList = () => {
   const [users, setUsers] = useState([]);
   const [updateData, setUpdateData] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = tutor
-          ? await getAllTutorsAPI()
-          : await getAllUsersAPI();
+        const response = await getAllAdminsAPI();
         console.log(response.data);
         setUsers(response.data.data);
       } catch (error) {
@@ -26,11 +24,9 @@ const TableList = ({ tutor = false }) => {
     };
 
     fetchData();
-  }, [tutor, updateData]);
+  }, [updateData]);
   const handleBlockUser = (userId) => {
-    const blockAPI = tutor ? blockTutorAPI : blockUserAPI;
-
-    blockAPI(userId)
+    blockAdminAPI(userId)
       .then((response) => {
         setUpdateData((prevUpdateData) => !prevUpdateData);
         console.log(response);
@@ -41,9 +37,7 @@ const TableList = ({ tutor = false }) => {
   };
 
   const handleUnblockUser = (userId) => {
-    const unblockAPI = tutor ? unBlockTutorAPI : unBlockUserAPI;
-
-    unblockAPI(userId)
+    unBlockAdminAPI(userId)
       .then((response) => {
         setUpdateData((prevUpdateData) => !prevUpdateData);
         console.log(response);
@@ -59,16 +53,13 @@ const TableList = ({ tutor = false }) => {
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xll:pl-11">
-                {tutor ? "Tutors" : "Users"}
+                Admin
               </th>
               <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xll:pl-11">
                 Member Since
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white xll:pl-11">
                 Status
-              </th>
-              <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white xll:pl-11">
-                {tutor ? "Courses" : "Enrolled"}
               </th>
               <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white xll:pl-11">
                 Actions
@@ -84,9 +75,7 @@ const TableList = ({ tutor = false }) => {
                       {user.name}
                     </h5>
                     <p className="text-sm">{user.email}</p>
-                    <p className="text-sm">
-                      {tutor ? user.tutorname : user.username}
-                    </p>
+                    <p className="text-sm">{user.adminname}</p>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">
@@ -109,9 +98,6 @@ const TableList = ({ tutor = false }) => {
                     </p>
                   </td>
 
-                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">0</p>
-                  </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5 text-center">
                       {user.isBlocked ? (
@@ -142,4 +128,4 @@ const TableList = ({ tutor = false }) => {
     </div>
   );
 };
-export default TableList;
+export default AdminList;
