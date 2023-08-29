@@ -8,6 +8,7 @@ import {
   unBlockUserAPI,
 } from "../../api/admin";
 import timeAgo from "../../utils/timeAgo";
+import { Toaster, toast } from "react-hot-toast";
 
 const TableList = ({ tutor = false }) => {
   const [users, setUsers] = useState([]);
@@ -28,32 +29,101 @@ const TableList = ({ tutor = false }) => {
     fetchData();
   }, [tutor, updateData]);
   const handleBlockUser = (userId) => {
-    const blockAPI = tutor ? blockTutorAPI : blockUserAPI;
+    toast(
+      <div className="flex flex-col items-center justify-center">
+        Are you sure you want to block this user?
+        <br />
+        <div className="flex">
+          <button
+            className="rounded-md bg-red-600 px-2 py-1 m-2 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            onClick={() => handleConfirmedBlock(userId)}
+          >
+            Yes
+          </button>
+          <button
+            className="rounded-md bg-green-600 px-2 py-1 m-2 text-md font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            onClick={() => toast.dismiss()}
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        duration: 6000,
+      }
+    );
+    const handleConfirmedBlock = (userId) => {
+      const blockAPI = tutor ? blockTutorAPI : blockUserAPI;
 
-    blockAPI(userId)
-      .then((response) => {
-        setUpdateData((prevUpdateData) => !prevUpdateData);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error blocking user:", error);
-      });
+      blockAPI(userId)
+        .then((response) => {
+          toast.success("User blocked!", {
+            duration: 6000, // 6 seconds
+          });
+          setUpdateData((prevUpdateData) => !prevUpdateData);
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Error blocking user!", {
+            duration: 6000,
+          });
+          console.error("Error blocking user:", error);
+        });
+
+      toast.dismiss();
+      toast.dismiss();
+    };
   };
 
   const handleUnblockUser = (userId) => {
-    const unblockAPI = tutor ? unBlockTutorAPI : unBlockUserAPI;
+    toast(
+      <div className="flex flex-col items-center justify-center">
+        Are you sure you want to Unblock this user?
+        <br />
+        <div className="flex">
+          <button
+            className="rounded-md bg-red-600 px-2 py-1 m-2 text-md font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            onClick={() => handleConfirmedUnblock(userId)}
+          >
+            Yes
+          </button>
+          <button
+            className="rounded-md bg-green-600 px-2 py-1 m-2 text-md font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            onClick={() => toast.dismiss()}
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        duration: 6000,
+      }
+    );
+    const handleConfirmedUnblock = (userId) => {
+      const unblockAPI = tutor ? unBlockTutorAPI : unBlockUserAPI;
 
-    unblockAPI(userId)
-      .then((response) => {
-        setUpdateData((prevUpdateData) => !prevUpdateData);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error unblocking user:", error);
-      });
+      unblockAPI(userId)
+        .then((response) => {
+          toast.success("User Unblocked!", {
+            duration: 6000, // 6 seconds
+          });
+          setUpdateData((prevUpdateData) => !prevUpdateData);
+          console.log(response);
+        })
+        .catch((error) => {
+          toast.error("Error Unblocking user!", {
+            duration: 6000,
+          });
+          console.error("Error unblocking user:", error);
+        });
+
+      toast.dismiss();
+      toast.dismiss();
+    };
   };
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2 5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7 5 xl:pb-1">
+      <Toaster />
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>

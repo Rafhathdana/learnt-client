@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PropTypes from "prop-types";
 import lessonSchema from "../../utils/validation/lesson.schema";
 import { PhotoIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { createLessonAPI } from "../../api/tutor";
 export default function CreateLesson({ course }) {
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
@@ -19,9 +20,35 @@ export default function CreateLesson({ course }) {
     resolver: yupResolver(lessonSchema),
   });
   const formData = new FormData();
-  const onSubmit = (data) => {};
-  const handleFileSelect = async (e) => {};
-  const removeSelectedFile = async () => {};
+  const handleFileSelect = async (e) => {
+    setError(null);
+    const fileSizeInBytes = e.target.files[0].size;
+    const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+    if (fileSizeInMB > 30) {
+      return setError("file size exceeded 30Mb");
+    }
+    setFileName(e.target.files[0].name);
+  };
+  const removeSelectedFile = async () => {
+    setFileName(null);
+  };
+  const onSubmit = (data) => {
+    if (error) {
+      console.log(error);
+      return false;
+    }
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("lesson", Array.from(data.files)[0]);
+    formData.append("courseId", course._id);
+    createLessonAPI(formData)
+      .then((response) => {
+        setIsOpen(!open);
+        navigate(`/tutor/courses/${course._id}`);
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
       <Button onClick={() => setIsOpen(!isOpen)} color="warning">
@@ -32,7 +59,7 @@ export default function CreateLesson({ course }) {
         show={isOpen}
         onClose={() => setIsOpen(!isOpen)}
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white">
           <Modal.Header>
             <span className="text-amber-500 nexa-font">
               {course.title} -Add New Lesson
@@ -134,7 +161,7 @@ export default function CreateLesson({ course }) {
                               MP4, HEIC, MOV, AVI, WMV, PDF, JPG OR JPEG
                             </p>
                           </div>
-                          {errors.video && errors.video.message}
+                          {errors.files && errors.files.message}
                         </div>
                       </>
                     )}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../../components/common/Logo";
 import Otp from "../../components/common/Otp";
 import { userOtpSendAPI, userSignUpAPI } from "../../api/user";
@@ -19,6 +19,7 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [timer, setTimer] = useState(null);
   const [otpSection, setOtpSection] = useState(false);
   const handleOtp = (e) => {
     setIsLoading(true);
@@ -27,6 +28,7 @@ export default function SignUp() {
     userOtpSendAPI(formValues)
       .then((data) => {
         console.log(data);
+        setTimer(60);
         setTimeout(() => {
           setIsLoading(false);
           setOtpSection(true);
@@ -66,6 +68,19 @@ export default function SignUp() {
         }, 500);
       });
   };
+  useEffect(() => {
+    let interval;
+
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else {
+      setTimer(null);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer]);
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -289,7 +304,11 @@ export default function SignUp() {
                     </span>
                     <div className="text-sm">
                       <div className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                        Resend Otp
+                        {timer ? (
+                          `Resend OTP in ${timer} seconds`
+                        ) : (
+                          <button onClick={handleOtp}>Resend OTP</button>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -24,6 +24,10 @@ const blockTutorAPI = (userId) => {
 const unBlockTutorAPI = (userId) => {
   return API.post("/admin/tutors/unblock", { userId });
 };
+
+const createCategoryAPI = (body, route = "/admin/category") => {
+  return API.post(route, body);
+};
 export {
   adminSignInAPI,
   adminSignUpAPI,
@@ -35,4 +39,5 @@ export {
   blockTutorAPI,
   unBlockTutorAPI,
   getSignedInAdminAPI,
+  createCategoryAPI,
 };

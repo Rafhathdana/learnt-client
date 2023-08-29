@@ -21,7 +21,7 @@ body {
     #23d5ab48
   );
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
+  animation: gradient 8s ease infinite;
 }
 @keyframes gradient {
   0% {
@@ -43,4 +43,36 @@ body {
   padding: 29px;
   border-radius: 25px;
   background-color: #ffffff52;
+}
+
+*::-webkit-scrollbar {
+  padding: 2px;
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #e6e8ec;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5850ec;
+  border-radius: 16px;
+  /* border: 1px solid #ffffff; */
+}
+
+.hide-scroll-bar::-webkit-scrollbar {
+  width: 1em;
+  height: 5px;
+}
+
+.hide-scroll-bar::-webkit-scrollbar-track {
+  background: #e6e8ec;
+}
+
+.hide-scroll-bar::-webkit-scrollbar-thumb {
+  width: 1px;
+  height: 10px;
+  background-color: #5850ec;
+  border-radius: 16px;
+  /* border: 1px solid #ffffff; */
 }
