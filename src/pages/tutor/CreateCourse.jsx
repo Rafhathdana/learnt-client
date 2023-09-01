@@ -7,26 +7,10 @@ import { useEffect, useState } from "react";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import courseSchema from "../../utils/validation/course.schema";
 import { createCourseAPI } from "../../api/tutor";
+import { getAllCategoriesAPI } from "../../api/common";
 
 export default function CreateCourse() {
-  const [categories, setCategories] = useState([
-    {
-      _id: 1,
-      title: "dvccsdxz",
-    },
-    {
-      _id: 2,
-      title: "dvccsdxz",
-    },
-    {
-      _id: 3,
-      title: "dvccsdxz",
-    },
-    {
-      _id: 4,
-      title: "dvccsdxz",
-    },
-  ]);
+  const [categories, setCategories] = useState([]);
   const [imageError, setImageError] = useState(null);
   const navigate = useNavigate();
   const [imagePreviewURL, setImagePreviewURL] = useState(null);
@@ -40,7 +24,11 @@ export default function CreateCourse() {
   } = useForm({
     resolver: yupResolver(courseSchema),
   });
-
+  useEffect(() => {
+    getAllCategoriesAPI().then(({ data }) => {
+      setCategories(data.categories);
+    });
+  });
   const validateImage = (file) => {
     setImagePreviewURL(null);
 

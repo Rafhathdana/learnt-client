@@ -46,7 +46,7 @@ export default function UserRoutes() {
         <Route path="signup" element={<SignUp />} />
         {/* <Route path="profile" element={<Profile />} /> */}
         <Route path="explore" element={<Explore />} />
-        <Route path="course/:id" element={<Course />} />
+        <Route path="courses/:id" element={<Course />} />
         <Route element={<PrivateUser />}>
           <Route path="user/profile" element={<Profile />} />
         </Route>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import Loading from "../../components/common/Loading";
 import SectionTitle from "../../components/common/SectionTitle";
@@ -9,17 +9,53 @@ import {
   CodeBracketIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-import { Tab } from "@headlessui/react";
+import { Disclosure, Tab } from "@headlessui/react";
+import { getUser } from "../../components/authorization/getUser";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { getCourseDetailsAPI } from "../../api/user";
+import timeAgo from "../../utils/timeAgo";
+import {
+  CheckCircleIcon,
+  ChevronUpIcon,
+  LockClosedIcon,
+} from "@heroicons/react/20/solid";
+import { Button } from "flowbite-react";
 
 export default function Course() {
-  const [course, setCourse] = useState(() => ({
-    imageUrl:
-      "https://secure.gravatar.com/avatar/c98bb1db01e83b0183281b6aa6173647?s=250&d=mm&r=g",
-  }));
+  const [course, setCourse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [formattedDate, setFormattedDate] = useState({});
+  const user = getUser();
+  const params = useParams();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
+  useEffect(() => {
+    (async () => {
+      const courseDetails = await getCourseDetailsAPI(params.id);
+      const userCourse = null;
+      setIsEnrolled(userCourse);
+      setCourse(courseDetails.data.data);
+      setTimeout(() => setIsLoading(false));
+    })();
+  }, []);
+  useEffect(() => {
+    const courseDate = new Date(course.createdAt).toDateString();
+    const courseTimeAgo = timeAgo(course.createdAt);
+    setFormattedDate({
+      timeAgo: courseTimeAgo,
+      createdAt: courseDate,
+    });
+  }, [course.createdAt]);
   return (
     <>
       <Toaster />
@@ -130,9 +166,145 @@ export default function Course() {
                         "rounded-xl bg-white p-3",
                         "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
                       )}
-                    ></Tab.Panel>
+                    >
+                      <ul>
+                        <li>
+                          {" "}
+                          <div className="p-5">
+                            <div className="ml-5 flex justify-between">
+                              <div>
+                                <h3 className="text-3xl">{course.title}</h3>
+                                <h3 className="text-md text-gray-500">
+                                  {course.tagline}
+                                </h3>
+                              </div>
+                              <div className="flex flex-col justify-center">
+                                <h3 className="text-xs text-gray-500">
+                                  {formattedDate?.createdAt}
+                                </h3>
+                                <h3 className="text-xs text-gray-500 text-end">
+                                  {formattedDate?.timeAgo} Ago
+                                </h3>
+                              </div>
+                            </div>
+                            <HorizontalRule />
+                            <div className="flex justify-center pb-4">
+                              <img
+                                src={course.thumbnailURL}
+                                alt="course thumbnail image"
+                                className="rounded-lg w-132.5 shadow-2"
+                              />
+                            </div>
+                            <HorizontalRule />
+                            <div className="px-20 text-justify">
+                              <span className="text-justify">
+                                {course.about}
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </Tab.Panel>
+                    <Tab.Panel
+                      className={classNames(
+                        "rounded-xl bg-white p-3 ",
+                        "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+                      )}
+                    >
+                      <ul>
+                        <li>
+                          <div className="p-5">
+                            <div className="ml-5 flex justify-between">
+                              <div>
+                                <h3 className="text-3xl">
+                                  Total Lessons - {course?.lessons?.length}
+                                </h3>
+                                <h3 className="text-md text-gray-500">
+                                  {course.tagline}
+                                </h3>
+                              </div>
+                              <div className="flex flex-col justify-center">
+                                <h3 className="text-xs text-gray-500">
+                                  {formattedDate.createdAt}
+                                </h3>
+                                <h3 className="text-xs text-gray-500 text-end">
+                                  {formattedDate.timeAgo} ago
+                                </h3>
+                              </div>
+                            </div>
+                            <HorizontalRule />
+                            <div className="w-full px-4">
+                              <div className="mx-auto w-full rounded-2xl bg-white">
+                                {course?.lessons?.map((lesson, index) => (
+                                  <Disclosure
+                                    as="div"
+                                    className="mt-2"
+                                    key={lesson._id}
+                                  >
+                                    {({ open }) => (
+                                      <>
+                                        <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-3 text-left text-sm font-medium text-purple-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                                          <span>
+                                            {index + 1}. {lesson.title}
+                                          </span>
+                                          <div className="flex items-center gap-2">
+                                            <div>{lesson.duration / 60}:00</div>
+                                            <ChevronUpIcon
+                                              className={`${
+                                                open
+                                                  ? "transform"
+                                                  : "rotate-180"
+                                              } h-5 w-5 text-purple-500`}
+                                            />
+                                          </div>
+                                        </Disclosure.Button>
+                                        <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 flex justify-between">
+                                          <div className="flex">
+                                            <LockClosedIcon className="w-4 mr-2 mb-2" />
+                                            {lesson.description}
+                                          </div>
+                                          <div>
+                                            {timeAgo(lesson.createdAt)} ago
+                                          </div>
+                                        </Disclosure.Panel>
+                                      </>
+                                    )}
+                                  </Disclosure>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-2/5 mx-3">
+            <SectionTitle title="price" description="This is a Paid Course" />
+            <HorizontalRule />
+            <div className="rounded-2xl bg-white py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex-col lg:justify-center lg:py-16">
+              <div className="mx-auto max-w-xs px-8">
+                {isEnrolled ? (
+                  <div className="flex flex-col items-center">
+                    <CheckCircleIcon className="text-green-400 w-20" />
+                    Enrolled for Course
+                    <Button
+                      className="mt-5"
+                      onClick={() =>
+                        navigate(`/courses/enrolled/${course._id}`)
+                      }
+                    >
+                      View Course
+                    </Button>
+                  </div>
+                ) : (
+                  <>p className
+                  </>
+                )}
               </div>
             </div>
           </div>

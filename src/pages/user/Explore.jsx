@@ -11,8 +11,10 @@ import { Fragment, useEffect, useState } from "react";
 import Loading from "../../components/common/Loading";
 import { Link } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";
-import { getAllCourseByFilter } from "../../api/common";
-
+import { getAllCategoriesAPI, getAllCourseByFilter } from "../../api/common";
+import { Badge } from "flowbite-react";
+import timeAgo from "../../utils/timeAgo";
+import Pagination from "../../components/common/Pagination";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -64,20 +66,33 @@ export default function Explore() {
   const [category, setCategory] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [limit,setLimit]=useState(3)
+  const [limit, setLimit] = useState(3);
   const [total, setTotal] = useState(0);
   const handleFilter = (targetOption, filterId) => {};
   const handleSort = (sort, order = "asc", targetIdx) => {};
   const onSearchChange = (value) => {};
-  const debouncedSearch=useDebounce(search,500)
-  useEffect(()=>{
-    const query=`page=${page}&sort=${sort.sort},${sort.order}&difficulty=${difficulty.toString()}&category=${category.toString()}&search=${debouncedSearch}&limit=${limit}`
-    getAllCourseByFilter(query).then(({data})=>{
-      setCourses(data.data)
-      setTotal(data.total)
-      setTimeout(())
-    })
-  })
+  const debouncedSearch = useDebounce(search, 500);
+  useEffect(() => {
+    const query = `page=${page}&sort=${sort.sort},${
+      sort.order
+    }&difficulty=${difficulty.toString()}&category=${category.toString()}&search=${debouncedSearch}&limit=${limit}`;
+    getAllCourseByFilter(query).then(({ data }) => {
+      setCourses(data.data);
+      setTotal(data.total);
+      setTimeout(() => setIsLoading(false), 1000);
+    });
+  }, [sort, page, debouncedSearch, difficulty, category]);
+  useEffect(() => {
+    getAllCategoriesAPI().then(({ data }) => {
+      const options = data.categories.map((category) => {
+        return {
+          value: category.title,
+          checked: false,
+        };
+      });
+      filters[1].options = [...options];
+    });
+  }, []);
   return (
     <div className="p-6">
       <div className="nexa-font rounded-2xl bg-white">
@@ -215,7 +230,7 @@ export default function Explore() {
                     Sort{" "}
                     <ChevronDownIcon
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-aria-hidden="true"
+                      aria-hidden="true"
                     />
                   </Menu.Button>
                 </div>
@@ -228,7 +243,7 @@ export default function Explore() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-20 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div>
                       {sortOptions.map((option, idx) => (
                         <Menu.Item key={option.name}>
@@ -309,7 +324,7 @@ export default function Explore() {
                   />
                 </div>
                 <h3 className="sr-only">Categories</h3>
-                <ul className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+                <ul className="space-y-4 border-b border-gray-200 pb-6 mt-4 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <a href={category.href}>{category.name}</a>
@@ -383,31 +398,91 @@ export default function Explore() {
                 ) : (
                   <>
                     <div className="flex flex-wrap justify-center gap-1">
-                      {courses.length
-                        ? courses.map((course) => {
-                            return (
-                              <div
-                                key={course._id}
-                                className="w-full max-w-xs block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-5"
-                              >
-                                <div className="overflow-hidden">
-                                  <Link to={`/courses/${course._id}`} >
-                                    <img src={course.thumbnailURL} alt="Product Image" className="min-h-[13rem] max-h-[13rem] min-w-full object-cover rounded-t-lg duration-300 scale-105 hover:scale-100" />
-                                  </Link>
-                                </div>
-                                <div className="px-5 pb-5 flex flex-col justify-end">
-                                  <Link to='#'>
-                                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white pt-4 nexa-font">{course.title}</h5>
-                                    <h5 className="text-sm font-semibold tracking-tight text-gray-400 dark:text-white nexa-font">{course.tagline}</h5>
-                                  </Link>
-                                  <div className="py-4 flex justify-between">
-                                     
+                      {courses.length ? (
+                        courses.map((course) => {
+                          return (
+                            <div
+                              key={course._id}
+                              className="w-full max-w-xs block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-5"
+                            >
+                              <div className="overflow-hidden">
+                                <Link to={`/courses/${course._id}`}>
+                                  <img
+                                    src={course.thumbnailURL}
+                                    alt="Product Image"
+                                    className="min-h-[13rem] max-h-[13rem] min-w-full object-cover rounded-t-lg duration-300 scale-105 hover:scale-100"
+                                  />
+                                </Link>
+                              </div>
+                              <div className="px-5 pb-5 flex flex-col justify-end">
+                                <Link to="#">
+                                  <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white pt-4 nexa-font">
+                                    {course.title}
+                                  </h5>
+                                  <h5 className="text-sm font-semibold tracking-tight text-gray-400 dark:text-white nexa-font">
+                                    {course.tagline}
+                                  </h5>
+                                </Link>
+                                <div className="py-4 flex justify-between">
+                                  <div>
+                                    <Badge
+                                      color="info"
+                                      className="w-fit capitalize mb-1"
+                                    >
+                                      {course.category}
+                                    </Badge>
+                                    <Badge
+                                      color={
+                                        course.difficulty === "expert" ||
+                                        course.difficulty === "advanced"
+                                          ? "warning"
+                                          : "indigo"
+                                      }
+                                      className="w-fit capitalize"
+                                    >
+                                      {course.difficulty}
+                                    </Badge>
                                   </div>
+                                  <Badge color="purple" className="capitalize">
+                                    {timeAgo(course.createdAt)}
+                                  </Badge>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                  <div className="flex flex-col items-start justify-start">
+                                    <span className="text-sm font-bold text-red-700 line-through dark:text-white">
+                                      ₹{course.price}
+                                    </span>
+                                    <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                                      ₹{course.price}
+                                    </span>
+                                  </div>
+                                  <Link
+                                    to={`/courses/${course._id}`}
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                  >
+                                    Enroll
+                                  </Link>
                                 </div>
                               </div>
-                            );
-                          })
-                        : ""}
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <>
+                          <h1 className="nexa-font">Oops! No Course Found</h1>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="mt-10">
+                      <Pagination
+                        page={page}
+                        total={total || 0}
+                        limit={limit}
+                        setPage={(page) => {
+                          setPage(page);
+                        }}
+                      />
                     </div>
                   </>
                 )}

@@ -9,6 +9,11 @@ const handleLogOutAPI = () => API.delete("/auth/logout");
 // user profile
 const getUserDetailsAPI = () => API.get("/user/details");
 const updateUserDetailsAPI = (body) => API.post("/user/details", body);
+
+const getCourseDetailsAPI = (id, route = "/user/courses/enroll/") =>
+  API.get(route + id);
+
+const enrollCourseAPI = (body) => API.post("/user/courses/enroll", body);
 export {
   userSignInAPI,
   userSignUpAPI,
@@ -18,4 +23,6 @@ export {
   getTokenUpdate,
   getUserDetailsAPI,
   updateUserDetailsAPI,
+  getCourseDetailsAPI,
+  enrollCourseAPI,
 };
