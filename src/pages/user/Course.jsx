@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import Loading from "../../components/common/Loading";
 import SectionTitle from "../../components/common/SectionTitle";
 import HorizontalRule from "../../components/common/HorizontalRule";
@@ -17,7 +17,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { getCourseDetailsAPI } from "../../api/user";
+import { enrollCourseAPI, getCourseDetailsAPI } from "../../api/user";
 import timeAgo from "../../utils/timeAgo";
 import {
   CheckCircleIcon,
@@ -25,6 +25,7 @@ import {
   LockClosedIcon,
 } from "@heroicons/react/20/solid";
 import { Button } from "flowbite-react";
+import Modal from "../../components/user/Modal";
 
 export default function Course() {
   const [course, setCourse] = useState({});
@@ -56,6 +57,28 @@ export default function Course() {
       createdAt: courseDate,
     });
   }, [course.createdAt]);
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+  const handleEnrollCourse = async (courseId, type) => {
+    if (!user.loggedIn)
+      return navigate(`/signin?private=true&from=${pathname}`);
+    if (type === "fake") console.log("fake Buy");
+    let response;
+    try {
+      response = await enrollCourseAPI({ courseId: courseId });
+    } catch (error) {
+      return console.log("error in enrolling Course", error);
+    }
+    setIsEnrolled(true);
+    toast.success(
+      "Congratulations ! You have Enrolled For the Course Successfully.",
+      {
+        duration: "4000",
+        position: "top-right",
+      }
+    );
+  };
   return (
     <>
       <Toaster />
@@ -302,7 +325,38 @@ export default function Course() {
                     </Button>
                   </div>
                 ) : (
-                  <>p className
+                  <>
+                    <p className="text-base font-semibold text-gray-600">
+                      Pay once , own it forever
+                    </p>
+                    <p className="mt-6 flex items-baseline justify-center gap-x-2">
+                      <span className="text-5xl font-bold tracking-tight text-gray-900">
+                        ₹{course?.price}
+                      </span>
+                      <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
+                        INR
+                      </span>
+                    </p>
+                    <button
+                      onClick={() => setIsOpen(!isOpen)}
+                      className="mt-2 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                      Fake Buy
+                    </button>
+                    <Modal
+                      isOpen={isOpen}
+                      setIsOpen={setIsOpen}
+                      modalData={{
+                        title: "Confirm Payment",
+                        description:
+                          'By Clicking "Confirm" you are accepting Learnt payment procedures and proceed to payment',
+                        onClick: () => handleEnrollCourse(course._id, "fake"),
+                      }}
+                    />
+                    <p className="mt-6 text-xs leading-5 text-gray-600">
+                      Invoices and receipts available for easy company
+                      reimbursement
+                    </p>
                   </>
                 )}
               </div>
