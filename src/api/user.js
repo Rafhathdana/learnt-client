@@ -14,6 +14,13 @@ const getCourseDetailsAPI = (id, route = "/user/courses/enroll/") =>
   API.get(route + id);
 
 const enrollCourseAPI = (body) => API.post("/user/courses/enroll", body);
+
+const createOrderAPI = (courseId) =>
+  API.post("/user/orders/create", { courseId });
+const verifyPaymentAPI = (data) =>
+  API.post("/user/orders/payment/verify", data);
+const isEnrolledInCourseAPI = (courseId) =>
+  API.get(`/user/details/enrolled/${courseId}/check`);
 export {
   userSignInAPI,
   userSignUpAPI,
@@ -25,4 +32,7 @@ export {
   updateUserDetailsAPI,
   getCourseDetailsAPI,
   enrollCourseAPI,
+  createOrderAPI,
+  verifyPaymentAPI,
+  isEnrolledInCourseAPI,
 };

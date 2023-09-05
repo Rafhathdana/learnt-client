@@ -19,11 +19,19 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const subCategories = [
-  { name: "Programming", href: "#" },
-  { name: "Backend", href: "#" },
-  { name: "Frontend", href: "#" },
-  { name: "Dev ops", href: "#" },
-  { name: "Artificial Intelligence ", href: "#" },
+  // { name: "Programming", href: "#" },
+  // { name: "Backend", href: "#" },
+  // { name: "Frontend", href: "#" },
+  // { name: "Dev ops", href: "#" },
+  // { name: "Artificial Intelligence ", href: "#" },
+];
+let sortOptions = [
+  { name: "Alphabetical [A-Z]", sort: "title", order: "asc", current: true },
+  { name: "Alphabetical [Z-A]", sort: "title", order: "desc", current: false },
+  { name: "Most popular", sort: "title", order: "asc", current: false },
+  { name: "Newest", sort: "createdAt", order: "desc", current: false },
+  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
+  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
 ];
 let filters = [
   {
@@ -49,14 +57,7 @@ let filters = [
     ],
   },
 ];
-let sortOptions = [
-  { name: "Alphabetical [A-Z]", sort: "title", order: "asc", current: true },
-  { name: "Alphabetical [Z-A]", sort: "title", order: "desc", current: false },
-  { name: "Most popular", sort: "title", order: "asc", current: false },
-  { name: "Newest", sort: "createdAt", order: "desc", current: false },
-  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
-  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
-];
+
 export default function Explore() {
   const [mobileFilterOpen, setMobileFiltersOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,14 +69,12 @@ export default function Explore() {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(3);
   const [total, setTotal] = useState(0);
-  const handleFilter = (targetOption, filterId) => {};
-  const handleSort = (sort, order = "asc", targetIdx) => {};
-  const onSearchChange = (value) => {};
   const debouncedSearch = useDebounce(search, 500);
   useEffect(() => {
     const query = `page=${page}&sort=${sort.sort},${
       sort.order
     }&difficulty=${difficulty.toString()}&category=${category.toString()}&search=${debouncedSearch}&limit=${limit}`;
+    console.log(query);
     getAllCourseByFilter(query).then(({ data }) => {
       setCourses(data.data);
       setTotal(data.total);
@@ -93,6 +92,72 @@ export default function Explore() {
       filters[1].options = [...options];
     });
   }, []);
+  useEffect(() => {
+    return () => {
+      sortOptions = sortOptions.map((sort) => {
+        if (sort.sort === "title" && sort.order === "asc") {
+          return { ...sort, current: true };
+        } else {
+          return { ...sort, current: false };
+        }
+      });
+    };
+  }, []);
+  const handleFilter = (targetOption, filterIdx) => {
+    filters = filters.map((filter) => {
+      if (filter.id === filterIdx) {
+        const updatedOptions = filter.options.map((option) => {
+          if (option.value === targetOption.value && option.checked === false) {
+            return { ...option, checked: true };
+          } else if (
+            option.value === targetOption.value &&
+            option.checked === true
+          ) {
+            return { ...option, checked: false };
+          }
+          return option;
+        });
+        return { ...filter, options: updatedOptions };
+      }
+      return filter;
+    });
+    buildFilterQuery(filterIdx);
+  };
+  const buildFilterQuery = (filterId) => {
+    const newFilter = [];
+    filters.forEach((filter) => {
+      if (filter.id === filterId) {
+        filter.options.forEach((option) => {
+          if (option.checked) {
+            newFilter.push(option.value);
+          }
+        });
+      }
+    });
+    if (filterId === "category") {
+      setCategory(newFilter);
+    }
+    if (filterId === "difficulty") {
+      setDifficulty(newFilter);
+    }
+    setPage(1);
+  };
+
+  const handleSort = (sort, order = "asc", targetIdx) => {
+    setSort({ sort: sort, order: order });
+    sortOptions = sortOptions.map((option, idx) => {
+      if (targetIdx === idx) {
+        return { ...option, current: true };
+      }
+      return { ...option, current: false };
+    });
+  };
+
+  const onSearchChange = (value) => {
+    setPage(1);
+    setSearch(value);
+  };
+
   return (
     <div className="p-6">
       <div className="nexa-font rounded-2xl bg-white">

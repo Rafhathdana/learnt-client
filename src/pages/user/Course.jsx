@@ -11,13 +11,12 @@ import {
 } from "@heroicons/react/24/outline";
 import { Disclosure, Tab } from "@headlessui/react";
 import { getUser } from "../../components/authorization/getUser";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { enrollCourseAPI, getCourseDetailsAPI } from "../../api/user";
+  enrollCourseAPI,
+  getCourseDetailsAPI,
+  isEnrolledInCourseAPI,
+} from "../../api/user";
 import timeAgo from "../../utils/timeAgo";
 import {
   CheckCircleIcon,
@@ -26,10 +25,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { Button } from "flowbite-react";
 import Modal from "../../components/user/Modal";
+import Payment from "../../components/user/Payment";
 
 export default function Course() {
   const [course, setCourse] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [formattedDate, setFormattedDate] = useState({});
@@ -37,14 +37,12 @@ export default function Course() {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+
   useEffect(() => {
     (async () => {
       const courseDetails = await getCourseDetailsAPI(params.id);
-      const userCourse = null;
-      setIsEnrolled(userCourse);
+      const userCourse = await isEnrolledInCourseAPI(params.id);
+      setIsEnrolled(userCourse?.data?.enrolled);
       setCourse(courseDetails.data.data);
       setTimeout(() => setIsLoading(false));
     })();
@@ -64,9 +62,8 @@ export default function Course() {
     if (!user.loggedIn)
       return navigate(`/signin?private=true&from=${pathname}`);
     if (type === "fake") console.log("fake Buy");
-    let response;
     try {
-      response = await enrollCourseAPI({ courseId: courseId });
+      const response = await enrollCourseAPI({ courseId: courseId });
     } catch (error) {
       return console.log("error in enrolling Course", error);
     }
@@ -102,7 +99,7 @@ export default function Course() {
                   </h1>
                 </span>
                 <img
-                  src={course.imageUrl}
+                  src="https://secure.gravatar.com/avatar/c98bb1db01e83b0183281b6aa6173647?s=250&d=mm&r=g"
                   alt="profile picture"
                   className="rounded-full w-20"
                 />
@@ -337,12 +334,21 @@ export default function Course() {
                         INR
                       </span>
                     </p>
+                    <Payment
+                      courseId={course._id}
+                      setIsEnrolled={(value) => {
+                        setIsEnrolled(value);
+                      }}
+                    >
+                      Get Course
+                    </Payment>
                     <button
                       onClick={() => setIsOpen(!isOpen)}
                       className="mt-2 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       Fake Buy
                     </button>
+
                     <Modal
                       isOpen={isOpen}
                       setIsOpen={setIsOpen}

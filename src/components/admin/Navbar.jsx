@@ -20,7 +20,7 @@ function Navbar() {
     { name: "sales", href: "/sales/manage" },
     { name: "Profile", href: "/admin/profile" },
   ];
-  let navitems = admin?.loggedIn ? adminnav : normalnav;
+  const navitems = admin?.loggedIn ? adminnav : normalnav;
   return (
     <NavBar
       style={{ backgroundColor: "rgb(243 244 246)", marginTop: "10px" }}

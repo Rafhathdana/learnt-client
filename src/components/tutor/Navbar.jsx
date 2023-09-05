@@ -20,7 +20,7 @@ function Navbar() {
     { name: "Create Course", href: "/tutor/courses/create" },
     { name: "Profile", href: "/tutor/profile" },
   ];
-  let navitems = tutor?.loggedIn ? tutornav : normalnav;
+  const navitems = tutor?.loggedIn ? tutornav : normalnav;
   return (
     <NavBar
       style={{ backgroundColor: "rgb(243 244 246)", marginTop: "10px" }}

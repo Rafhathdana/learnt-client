@@ -19,7 +19,7 @@ function Navbar() {
     { name: "Enrolled", href: "/enrolled" },
     { name: "Profile", href: "/user/profile" },
   ];
-  let navitems = user?.loggedIn ? usernav : normalnav;
+  const navitems = user?.loggedIn ? usernav : normalnav;
   return (
     <NavBar
       style={{ backgroundColor: "rgb(243 244 246)", marginTop: "10px" }}
