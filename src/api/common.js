@@ -8,5 +8,13 @@ const getAllCoursesAPI = () => {
 const getAllCourseByFilter = (data) => {
   return API.get(`user/courses?${data}`);
 };
+const getLessonDetailsAPI = (lessonId) => {
+  return API.get(`/user/lessons/${lessonId}`);
+};
 
-export { getAllCategoriesAPI, getAllCoursesAPI, getAllCourseByFilter };
+export {
+  getAllCategoriesAPI,
+  getAllCoursesAPI,
+  getAllCourseByFilter,
+  getLessonDetailsAPI,
+};

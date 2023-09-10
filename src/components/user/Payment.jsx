@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import loadScript from "../../../../server/src/frameworks/web/utils/loadScript";
+import loadScript from "../../utils/loadScript";
 import { toast } from "react-hot-toast";
 import { createOrderAPI, verifyPaymentAPI } from "../../api/user";
 

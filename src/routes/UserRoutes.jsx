@@ -13,6 +13,9 @@ import Profile from "../pages/user/Profile";
 import Explore from "../pages/user/Explore";
 import Course from "../pages/user/Course";
 import { PrivateUser } from "../components/authorization/PrivateAccess";
+import Enrolled from "../pages/user/Enrolled";
+import CourseOwned from "../pages/user/courseOwned";
+import ViewCourse from "../pages/user/viewCourse";
 
 export default function UserRoutes() {
   const dispatch = useDispatch();
@@ -49,6 +52,10 @@ export default function UserRoutes() {
         <Route path="courses/:id" element={<Course />} />
         <Route element={<PrivateUser />}>
           <Route path="user/profile" element={<Profile />} />
+          <Route path="user/profile/courses" element={<CourseOwned />} />
+          <Route path="user/profile/transactions" element={<Profile />} />
+          <Route path="courses/enrolled" element={<Enrolled />} />
+          <Route path="courses/enrolled/:id" element={<ViewCourse />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

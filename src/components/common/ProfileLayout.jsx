@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import {
+  ClipboardDocumentCheckIcon,
   FunnelIcon,
   UserCircleIcon,
   XMarkIcon,
@@ -8,9 +9,17 @@ import { useSelector } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 const sidebarMenu = [
-  { title: "Profile", link: "/", icon: <UserCircleIcon /> },
-  { title: "Profile1", link: "/hjbmn", icon: <UserCircleIcon /> },
-  { title: "Profile2", link: "/", icon: <UserCircleIcon /> },
+  { title: "Profile", link: "/user/profile", icon: <UserCircleIcon /> },
+  {
+    title: "Courses",
+    link: "/user/profile/courses",
+    icon: <ClipboardDocumentCheckIcon />,
+  },
+  {
+    title: "Transactions",
+    link: "/user/profile/transactions",
+    icon: <UserCircleIcon />,
+  },
 ];
 export default function ProfileLayout({ children, tutor = false }) {
   const user = useSelector((state) => (tutor ? state.tutor : state.user));
@@ -115,7 +124,7 @@ export default function ProfileLayout({ children, tutor = false }) {
                       {user.email}
                     </h1>
                   </li>
-                  {sidebarMenu.map((option, index) => {
+                  {sidebarMenu.map((option, index) => (
                     <li
                       key={index}
                       className="flex border-b last:border-none items-center first:pt-2"
@@ -131,8 +140,8 @@ export default function ProfileLayout({ children, tutor = false }) {
                         <span className="w-6">{option.icon}</span>
                         {option.title}
                       </Link>
-                    </li>;
-                  })}
+                    </li>
+                  ))}
                 </ul>
                 <ul
                   role="list"

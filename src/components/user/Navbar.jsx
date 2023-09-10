@@ -16,7 +16,7 @@ function Navbar() {
   const usernav = [
     { name: "Home", href: "/user" },
     { name: "Explore", href: "/explore" },
-    { name: "Enrolled", href: "/enrolled" },
+    { name: "Enrolled", href: "/courses/enrolled" },
     { name: "Profile", href: "/user/profile" },
   ];
   const navitems = user?.loggedIn ? usernav : normalnav;
