@@ -20,6 +20,8 @@ export default function ViewCourse() {
   const [lesson, setLesson] = useState("");
   const [formatVideo, setFormatVideo] = useState(true);
   const params = useParams();
+  const myCallback = () => console.log("Video has ended");
+
   useEffect(() => {
     (async () => {
       const courseDetails = await getCourseDetailsAPI(params.id);
@@ -37,7 +39,7 @@ export default function ViewCourse() {
   const playLesson = (lessonId) => {
     getLessonDetailsAPI(lessonId).then((response) => {
       setLesson(response.data.lesson);
-      setFormatVideo(response.data.formatVideo);
+      setFormatVideo(response.data.lesson?.videoFormat);
     });
   };
   useEffect(() => {
@@ -65,22 +67,34 @@ export default function ViewCourse() {
               </div>
             </div>
             <HorizontalRule />
-            {formatVideo ? (
-              <div className="flex justify-center pb-4">
+            {formatVideo != "pdf" ? (
+              <div className="flex justify-center pb-4 h-98">
                 <video
-                  src={lesson.videoURL}
+                  className="w-full rounded-lg h-full"
                   controls
-                  className="w-full rounded-lg"
+                  onEnded={() => myCallback()}
+                  src={lesson.videoURL}
                   type="video/mp4"
+                  controlsList="nodownload"
                 ></video>
               </div>
             ) : (
-              <div className="flex justify-center pb-4">
-                <iframe
+              <div className="flex justify-center pb-4" height="800px">
+                {/* <iframe
                   src={lesson.videoURL}
-                  className="w-full rounded-lg"
-                  frameborder="0"
-                ></iframe>
+                  className="w-full rounded-lg h-full"
+                ></iframe> */}
+                <object
+                  data={lesson.videoURL}
+                  type="application/pdf"
+                  className="w-full rounded-lg h-full"
+                  height="800px"
+                >
+                  <p>
+                    Alternative text - include a link{" "}
+                    <a href={lesson.videoURL}>to the PDF!</a>
+                  </p>
+                </object>
               </div>
             )}
             <div className="ml-3 flex justify-between">
@@ -93,7 +107,7 @@ export default function ViewCourse() {
             </div>
           </div>
           {/* left section 1 */}
-          <div className="flex justify-around px-20 bg-white rounded-xl p-10">
+          {/* <div className="flex justify-around px-20 bg-white rounded-xl p-10">
             <div className="flex justify-center items-center ">
               <span className="text-xl text-center px-4 text-gray-400">
                 Instructor
@@ -118,10 +132,10 @@ export default function ViewCourse() {
               </div>
               <CodeBracketIcon className="w-10" />
             </div>
-          </div>
+          </div> */}
 
           {/* left section 2 */}
-          <div className="bg-white flex p-3 my-3 rounded-lg">
+          {/* <div className="bg-white flex p-3 my-3 rounded-lg">
             <ul className="flex justify-evenly w-full">
               <li className="flex gap-2">
                 <BookOpenIcon className="w-5 text-blue-500" />{" "}
@@ -136,15 +150,15 @@ export default function ViewCourse() {
                 {course?.enrolled?.length ?? 15} enrolled
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* left section 3 */}
-          <div className="flex justify-center bg-white rounded-xl mt-2">
+          {/* <div className="flex justify-center bg-white rounded-xl mt-2">
             <div
               className="w-full px-2 py-2 sm:px-4 "
               style={{ minHeight: "31rem" }}
             ></div>
-          </div>
+          </div> */}
         </div>
         {/* Right Lessons section  */}
         <div className="md:w-2/5 mx-3 mt-3 md:mt-20 md:mr-10">

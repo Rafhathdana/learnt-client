@@ -11,6 +11,8 @@ const DropdownMessage = () => {
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+  const profileImage =
+    "https://pluspng.com/img-png/user-png-icon-young-user-icon-2400.png";
 
   // close on click outside
   useEffect(() => {
@@ -97,7 +99,7 @@ const DropdownMessage = () => {
               to="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
-                <img src={""} alt="User" />
+                <img src={profileImage} alt="User" />
               </div>
 
               <div>
@@ -115,7 +117,7 @@ const DropdownMessage = () => {
               to="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
-                <img src={""} alt="User" />
+                <img src={profileImage} alt="User" />
               </div>
 
               <div>
@@ -133,7 +135,7 @@ const DropdownMessage = () => {
               to="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
-                <img src={""} alt="User" />
+                <img src={profileImage} alt="User" />
               </div>
 
               <div>
@@ -151,7 +153,7 @@ const DropdownMessage = () => {
               to="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
-                <img src={""} alt="User" />
+                <img src={profileImage} alt="User" />
               </div>
 
               <div>
@@ -169,7 +171,7 @@ const DropdownMessage = () => {
               to="/messages"
             >
               <div className="h-12.5 w-12.5 rounded-full">
-                <img src={""} alt="User" />
+                <img src={profileImage} alt="User" />
               </div>
 
               <div>

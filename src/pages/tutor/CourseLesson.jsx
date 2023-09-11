@@ -36,7 +36,7 @@ export default function CourseLesson() {
           <div className="flex nexa-font p-3">
             <div className="flex-1 p-10 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
               <img
-                src={course?.thumbnail}
+                src={course?.thumbnailURL}
                 className="w-125 card ml-10 rounded"
                 alt="alternate image"
               />
