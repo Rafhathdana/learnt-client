@@ -515,7 +515,7 @@ export default function Explore() {
                                 <div className="flex items-center justify-between">
                                   <div className="flex flex-col items-start justify-start">
                                     <span className="text-sm font-bold text-red-700 line-through dark:text-white">
-                                      ₹{course.price}
+                                      ₹{course.price + 490}
                                     </span>
                                     <span className="text-2xl font-bold text-gray-900 dark:text-white">
                                       ₹{course.price}

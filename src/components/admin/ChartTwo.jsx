@@ -61,17 +61,20 @@ const options = {
   },
 };
 
-const ChartTwo = () => {
+const ChartTwo = ({ profits }) => {
+  // const { title1, title2, data1, data2 } = profits;
+  const { title1, data1 } = profits;
   const [state, setState] = useState({
     series: [
-      // {
-      //   name: "Sales",
-      //   data: [44, 55, 41, 67, 22, 43, 65],
-      // },
       {
-        name: "Course Sales",
-        data: [13, 23, 20, 8, 13, 27, 15],
+        name: title1,
+        data: data1,
       },
+
+      // {
+      //   name: title2,
+      //   data: data2,
+      // },
     ],
   });
 

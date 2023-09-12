@@ -28,10 +28,13 @@ const unBlockTutorAPI = (userId) => {
 const createCategoryAPI = (body, route = "/admin/category") => {
   return API.post(route, body);
 };
+const handleAdminLogOutAPI = () => API.delete("/auth/admin/logout");
+
 export {
   adminSignInAPI,
   adminSignUpAPI,
   adminOtpSendAPI,
+  handleAdminLogOutAPI,
   getAllUsersAPI,
   blockUserAPI,
   unBlockUserAPI,

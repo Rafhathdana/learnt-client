@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { removeAdmin } from "../../features/adminSlice";
+import { handleAdminLogOutAPI } from "../../api/admin";
 
 // import UserOne from '../images/user/user-01.png';
 
@@ -38,7 +40,14 @@ const DropdownUser = () => {
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
   });
-
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(removeAdmin());
+    localStorage.removeItem("isAdminAuth");
+    handleAdminLogOutAPI().then(({ data }) => {
+      navigate("/admin/signin?logout=true");
+    });
+  };
   return (
     <div className="relative">
       <Link
@@ -161,10 +170,7 @@ const DropdownUser = () => {
           </li>
         </ul>
         <button
-          onClick={() => {
-            localStorage.removeItem("adminIsAuth");
-            navigate("/admin/signin");
-          }}
+          onClick={() => handleLogOut()}
           className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         >
           <svg

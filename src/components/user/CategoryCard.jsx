@@ -2,8 +2,15 @@ import { Link } from "react-router-dom";
 import HorizontalRule from "../common/HorizontalRule";
 import SectionTitle from "../common/SectionTitle";
 import { CodeBracketIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 
 export default function CategoryCard({ categories }) {
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(!isLoading);
+    }, 2000);
+  }, []);
   return (
     <>
       <SectionTitle
@@ -14,7 +21,7 @@ export default function CategoryCard({ categories }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center gap-4 p-5 md:p-2">
         {categories.map((category, i) => (
           <Link
-            to={"/expore"}
+            to={"/explore"}
             key={i}
             className="block min-w-full sm:min-w-0 max-w-xs p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition ease-in-out hover:scale-105 duration-300 hover:shadow-lg ring-1 sm:ring-0"
           >
@@ -49,7 +56,9 @@ export default function CategoryCard({ categories }) {
               clipRule="evenodd"
             ></path>
           </svg>
+          <span className="sr-only">Icon</span>
         </button>
+        <HorizontalRule />
       </div>
       <HorizontalRule />
     </>

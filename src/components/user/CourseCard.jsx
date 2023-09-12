@@ -1,54 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "flowbite-react";
 import timeAgo from "../../utils/timeAgo";
+import { getAllCoursesAPI } from "../../api/common";
 export default function CourseCard() {
-  const [courses, setCourses] = useState([
-    {
-      _id: "erfscdxz",
-      thumbnailURL:
-        "https://photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg",
-      title: "hgbmn",
-      tagline: "km, sdxz ",
-      category: "dwxsa",
-      createdAt: "2023-08-02T14:45:37.092+00:00",
-      offerprice: "1000",
-      price: "520",
-    },
-    {
-      _id: "erfscdxz",
-      thumbnailURL:
-        "https://photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg",
-      title: "hgbmn",
-      tagline: "km, sdxz ",
-      category: "dwxsa",
-      createdAt: "2023-08-02T14:45:37.092+00:00",
-      offerprice: "1000",
-      price: "520",
-    },
-    {
-      _id: "erfscdxz",
-      thumbnailURL:
-        "https://photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg",
-      title: "hgbmn",
-      tagline: "km, sdxz ",
-      category: "dwxsa",
-      createdAt: "2023-08-02T14:45:37.092+00:00",
-      offerprice: "1000",
-      price: "520",
-    },
-    {
-      _id: "erfscdxz",
-      thumbnailURL:
-        "https://photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg",
-      title: "hgbmn",
-      tagline: "km, sdxz ",
-      category: "dwxsa",
-      createdAt: "2023-08-02T14:45:37.092+00:00",
-      offerprice: "1000",
-      price: "520",
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
+  useEffect(() => {
+    (async () => {
+      getAllCoursesAPI()
+        .then((response) => {
+          setCourses(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })();
+  }, []);
   return (
     <>
       <div
@@ -105,7 +72,7 @@ export default function CourseCard() {
               <div className="flex items-center justify-between">
                 <div className="flex flex-col items-start justify-start">
                   <span className="text-sm font-bold text-red-700 line-through dark:text-white">
-                    ₹{course.offerprice}
+                    ₹{course.price + 490}
                   </span>
                   <span className="text-sm font-bold text-gray-900 dark:text-white nexa-font">
                     ₹{course.price}

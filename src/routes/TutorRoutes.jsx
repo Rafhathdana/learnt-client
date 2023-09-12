@@ -14,6 +14,7 @@ import { removeTutor, setTutor } from "../features/tutorSlice";
 import ManageCourses from "../pages/tutor/ManageCourses";
 import CourseLesson from "../pages/tutor/CourseLesson";
 import Profile from "../pages/tutor/Profile";
+import Dashboard from "../pages/tutor/Dashboard";
 
 export default function TutorRoutes() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export default function TutorRoutes() {
           <Route path="/courses" element={<ManageCourses />} />
           <Route path="/courses/:id" element={<CourseLesson />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="signin" element={<SignIn />} />
