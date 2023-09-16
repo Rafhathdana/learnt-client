@@ -18,6 +18,7 @@ function Navbar() {
     { name: "Home", href: "/tutor" },
     { name: "Manage Course", href: "/tutor/courses" },
     { name: "Create Course", href: "/tutor/courses/create" },
+    { name: "Dashboard", href: "/tutor/dashboard" },
     { name: "Profile", href: "/tutor/profile" },
   ];
   const navitems = tutor?.loggedIn ? tutornav : normalnav;

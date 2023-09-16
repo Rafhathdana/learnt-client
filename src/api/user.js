@@ -12,6 +12,8 @@ const updateUserDetailsAPI = (body) => API.post("/user/details", body);
 
 const getCourseDetailsAPI = (id, route = "/user/courses/enroll/") =>
   API.get(route + id);
+const getCourseEnrolledDetailsAPI = (id, route = "/user/courses/enrolled/") =>
+  API.get(route + id);
 
 const enrollCourseAPI = (body) => API.post("/user/courses/enroll", body);
 
@@ -21,7 +23,7 @@ const verifyPaymentAPI = (data) =>
   API.post("/user/orders/payment/verify", data);
 const isEnrolledInCourseAPI = (courseId) =>
   API.get(`/user/details/enrolled/${courseId}/check`);
-const getAllOrdersByUserAPI = () => API.apply.get(`/user/orders`);
+const getAllOrdersByUserAPI = () => API.get(`/user/orders`);
 const getUserEnrolledCoursesAPI = () => API.get(`user/courses/enroll`);
 export {
   userSignInAPI,
@@ -39,4 +41,5 @@ export {
   isEnrolledInCourseAPI,
   getUserEnrolledCoursesAPI,
   getAllOrdersByUserAPI,
+  getCourseEnrolledDetailsAPI,
 };

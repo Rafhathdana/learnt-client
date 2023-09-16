@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
-import { getCourseDetailsAPI } from "../../api/user";
-import { useParams } from "react-router-dom";
+import { getCourseEnrolledDetailsAPI } from "../../api/user";
+import { useNavigate, useParams } from "react-router-dom";
 import { getLessonDetailsAPI } from "../../api/common";
 import timeAgo from "../../utils/timeAgo";
 import HorizontalRule from "../../components/common/HorizontalRule";
-import {
-  BookOpenIcon,
-  ChevronUpIcon,
-  ClockIcon,
-  CodeBracketIcon,
-  PlayCircleIcon,
-  UserGroupIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronUpIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
 import { Disclosure } from "@headlessui/react";
 export default function ViewCourse() {
   const [course, setCourse] = useState({});
@@ -21,10 +14,11 @@ export default function ViewCourse() {
   const [formatVideo, setFormatVideo] = useState(true);
   const params = useParams();
   const myCallback = () => console.log("Video has ended");
-
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const courseDetails = await getCourseDetailsAPI(params.id);
+      const courseDetails = await getCourseEnrolledDetailsAPI(params.id);
+      if (!courseDetails) navigate("/courses/params.id");
       setCourse(courseDetails.data.data);
       console.log(courseDetails.data.data);
       setTimeout(() => setIsLoading(false), 1000);

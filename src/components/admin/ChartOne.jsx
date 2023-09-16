@@ -114,18 +114,20 @@ const options = {
   },
 };
 
-const ChartOne = () => {
+const ChartOne = ({ dataValues }) => {
+  const { title1, title2, data1, data2 } = dataValues;
   const [state, setState] = useState({
     series: [
       {
-        name: "Tutor Register",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0],
+        name: title1,
+        data: data1,
       },
-
-      {
-        name: "User Register",
-        data: [0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0],
-      },
+      title2
+        ? {
+            name: title2,
+            data: data2,
+          }
+        : "",
     ],
   });
 
@@ -138,19 +140,21 @@ const ChartOne = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Tutors</p>
+              <p className="font-semibold text-primary">{title1}</p>
               <p className="text-sm font-medium">1.01.2023 - 1.01.2024</p>
             </div>
           </div>
-          <div className="flex min-w-47.5">
-            <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
-              <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
-            </span>
-            <div className="w-full">
-              <p className="font-semibold text-secondary">Total Users</p>
-              <p className="text-sm font-medium">1.01.2023 - 1.01.2024</p>
+          {title2 && (
+            <div className="flex min-w-47.5">
+              <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
+                <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
+              </span>
+              <div className="w-full">
+                <p className="font-semibold text-secondary">{title2}</p>
+                <p className="text-sm font-medium">1.01.2023 - 1.01.2024</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { getSignedInAdminAPI } from "../api/admin";
 import { PrivateAdmin } from "../components/authorization/PrivateAccess";
 import ManageAdmin from "../pages/admin/ManageAdmin";
+import { Toaster } from "react-hot-toast";
 
 export default function adminRoutes() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ export default function adminRoutes() {
   }, []);
   return (
     <div>
+      <div>
+        <Toaster position="bottom-center" reverseOrder={true} />
+      </div>
       <Routes>
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
@@ -47,7 +51,7 @@ export default function adminRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/users" element={<ManageUsers />} />
           <Route path="/tutors" element={<ManageTutors />} />
-          
+
           <Route path="/category" element={<ManageCategory />} />
           <Route path="/admins" element={<ManageAdmin />} />
         </Route>
