@@ -31,7 +31,9 @@ const getCourseDetailsAPI = (id, route = "/tutor/courses/") => {
 // tutor profile
 const getTutorDetailsAPI = () => API.get("/tutor/details");
 const updateTutorDetailsAPI = (body) => API.post("/tutor/details", body);
-
+const getTopTutorsAPI = async (route = "/tutor/details/top") => {
+  return API.get(route);
+};
 export {
   tutorSignInAPI,
   tutorSignUpAPI,
@@ -44,4 +46,5 @@ export {
   getCourseDetailsAPI,
   getTutorDetailsAPI,
   updateTutorDetailsAPI,
+  getTopTutorsAPI,
 };

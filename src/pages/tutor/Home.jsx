@@ -4,6 +4,10 @@ import HorizontalRule from "../../components/common/HorizontalRule";
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
 import TutorAdvantages from "../../components/tutor/TutorAdvantages";
+import About from "../../components/common/About";
+import FooterContent from "../../components/common/FooterContent";
+import TopTutors from "../../components/tutor/TopTutors";
+import TutorsReview from "../../components/tutor/TutorsReview";
 
 export default function Home() {
   return (
@@ -11,7 +15,17 @@ export default function Home() {
       <div className="pt-10 px-1 md:px-10 sm:px-5 bg-gray-200/95 pb-24">
         <Banner />
         <hr className="h-px my-3 md:mt-12 bg-gray-300 border-0 dark:bg-gray-700" />
-        <SectionTitle title="Tutors" description="Meet Our Tutors." tutor />
+        <SectionTitle
+          title="Tutors"
+          description=" Star Tutors. Learn From the Best."
+          tutor
+        />
+        <HorizontalRule />
+        <div className="flex items-stretch gap-1 md:gap-5 flex-wrap md:flex-nowrap md:flex-row">
+          <TopTutors className="flex-1" />
+          <TutorsReview className="flex-1" />
+        </div>
+        <SectionTitle title="Course" description="Manage Your Course." tutor />
         <HorizontalRule />
         <div className="flex justify-center px-3">
           <Card className="max-w-4xl mb-10">
@@ -51,6 +65,8 @@ export default function Home() {
           </Card>
         </div>
         <TutorAdvantages />
+        <About tutor />
+        <FooterContent tutor />
       </div>
     </>
   );
