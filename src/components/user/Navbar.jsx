@@ -4,34 +4,45 @@ import Logo from "../common/Logo";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MenuDropDown from "../user/MenuDropDown";
+import {
+  Contact,
+  Enrolled,
+  Explore,
+  Home,
+  Profile,
+  Tutor,
+  User,
+  UserSignIn,
+} from "../../api/link";
 function Navbar() {
   const { pathname } = useLocation();
   const user = useSelector((state) => state.user);
-  const normalnav = [
-    { name: "Home", href: "/user" },
-    { name: "Explore", href: "/explore" },
-    { name: "Teach", href: "/tutor/" },
-    { name: "Contact", href: "/contact" },
+  const NormalNav = [
+    { name: "Home", href: User },
+    { name: "Explore", href: Explore },
+    { name: "Teach", href: Tutor },
+    { name: "Contact", href: Contact },
   ];
-  const usernav = [
-    { name: "Home", href: "/user" },
-    { name: "Explore", href: "/explore" },
-    { name: "Enrolled", href: "/courses/enrolled" },
-    { name: "Profile", href: "/user/profile" },
+
+  const UserNav = [
+    { name: "Home", href: Home },
+    { name: "Explore", href: Explore },
+    { name: "Enrolled", href: Enrolled },
+    { name: "Profile", href: Profile },
   ];
-  const navitems = user?.loggedIn ? usernav : normalnav;
+  const navitems = user?.loggedIn ? UserNav : NormalNav;
   return (
     <NavBar
       style={{ backgroundColor: "rgb(243 244 246)", marginTop: "10px" }}
       fluid={true}
       rounded={true}
     >
-      <Logo className="mr-3" to={"/user"} size={1.3} />
+      <Logo className="mr-3" to={User} size={1.3} />
       <div className="flex md:order-2">
         {user.loggedIn ? (
           <MenuDropDown className="w-3" user={user} />
         ) : (
-          <Link to={`signin?from=${pathname}`}>
+          <Link to={UserSignIn(pathname)}>
             <Button>Sign In </Button>
           </Link>
         )}

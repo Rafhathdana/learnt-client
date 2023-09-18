@@ -4,7 +4,6 @@ import {
   PresentationChartBarIcon,
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
 import SectionTitle from "../common/SectionTitle";
 import HorizontalRule from "../common/HorizontalRule";
 const features = [
@@ -51,7 +50,7 @@ export default function TutorAdvantages() {
             </h2>
             <p className="mt-2 text-md font-bold tracking-tight text-center text-gray-900 sm:text-4xl">
               Join our global community of tutors and make a difference in
-              learners' lives.
+              learners lives.
             </p>
             <p className="mt-2 sm:mt-6 text-xs sm:text-lg leading-4 sm:leading-8 text-gray-600 text-center">
               Unleash your teaching potential with our dynamic learning platform
