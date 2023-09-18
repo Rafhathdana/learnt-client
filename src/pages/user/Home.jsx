@@ -4,6 +4,9 @@ import CategoryCard from "../../components/user/CategoryCard";
 import TrendingCourse from "../../components/user/TrendingCourse";
 import { getAllCategoriesAPI } from "../../api/common";
 import TopBanner from "../../components/common/TopBanner";
+import TabSection from "../../components/user/TabSection";
+import About from "../../components/common/About";
+import FooterContent from "../../components/common/FooterContent";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -39,6 +42,9 @@ export default function Home() {
         <hr className="h-px my-8 bg-gray-300 border-0 dark:bg-gray-700" />
         <CategoryCard categories={categories} />
         <TrendingCourse />
+        <TabSection />
+        <About />
+        <FooterContent />
       </div>
     </>
   );
