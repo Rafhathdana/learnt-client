@@ -5,6 +5,7 @@ import Loading from "../../components/common/Loading";
 import { Link } from "react-router-dom";
 import { Badge } from "flowbite-react";
 import { getUserEnrolledCoursesAPI } from "../../api/user";
+import { Dumy, UserViewCourse } from "../../api/link";
 
 export default function Enrolled() {
   const [courses, setCourses] = useState([]);
@@ -36,7 +37,7 @@ export default function Enrolled() {
               key={course._id}
             >
               <div className="overflow-hidden">
-                <Link to={`/courses/enrolled/${course._id}`}>
+                <Link to={UserViewCourse(course._id)}>
                   <img
                     src={course.thumbnailURL}
                     alt="Product Image"
@@ -45,7 +46,7 @@ export default function Enrolled() {
                 </Link>
               </div>
               <div className="px-5 pb-5">
-                <Link to="#">
+                <Link to={Dumy}>
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white pt-4 nexa-font">
                     {course.title}
                   </h5>

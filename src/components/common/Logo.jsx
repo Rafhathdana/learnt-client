@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { Home } from "../../api/link";
 
 export default function Logo({
   size = 1,
   tutor = false,
-  to = "/",
+  to = Home,
   admin = false,
 }) {
   return (

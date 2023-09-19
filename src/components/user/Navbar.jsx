@@ -8,7 +8,6 @@ import {
   Contact,
   Enrolled,
   Explore,
-  Home,
   Profile,
   Tutor,
   User,
@@ -25,7 +24,7 @@ function Navbar() {
   ];
 
   const UserNav = [
-    { name: "Home", href: Home },
+    { name: "Home", href: User },
     { name: "Explore", href: Explore },
     { name: "Enrolled", href: Enrolled },
     { name: "Profile", href: Profile },

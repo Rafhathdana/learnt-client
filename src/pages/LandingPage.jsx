@@ -9,12 +9,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
 import Logo from "../components/common/Logo";
+import { Contact, Explore, Tutor, User } from "../api/link";
 
 const navigation = [
-  { name: "Home", href: "/user" },
-  { name: "Explore", href: "/#" },
-  { name: "Teach", href: "/#" },
-  { name: "Contact", href: "/#" },
+  { name: "Home", href: User },
+  { name: "Explore", href: Explore },
+  { name: "Teach", href: Tutor },
+  { name: "Contact", href: Contact },
 ];
 const LandingPage = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -22,12 +23,17 @@ const LandingPage = () => {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        "hai ,samle text",
-        "hai ,samle text",
-        "hai ,samle textvfd edfbghbvfgbcv ",
-        "hai ,samle text rgdfvnh trfgcvgf gdvf",
-        "hai ,samle text tgfv rdfcv fdc edfvc",
-        "hai ,samle text gfdvc tfdv rfdrdfv",
+        "Where knowledge blossoms and wisdom flourishes.",
+        "Embark on a learning adventure with LearnT leading the way.",
+        "Discover the universe's secrets with LearnT.",
+        "Unleash the power of knowledge through LearnT.",
+        "Experience the joy of discovery through LearnT.",
+        "LearnT: Empowering minds to reach new heights.",
+        "LearnT: Where ideas come to life and minds thrive.",
+        "LearnT: Nurturing minds to create a brighter tomorrow.",
+        "LearnT: Unlocking the potential within every mind.",
+        "Enlighten your mind with LearnT's boundless knowledge.",
+        "Explore the world's wonders with LearnT.",
       ],
       typeSpeed: 80,
       backDelay: 700,
@@ -94,7 +100,7 @@ const LandingPage = () => {
           <div className="fixed inset-0 z-50">
             <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
               <div className="flex items-center justify-between">
-                <Link to="#" className="-m-1.5 p-1.5">
+                <Link to={User} className="-m-1.5 p-1.5">
                   <span className="flex items-center gap-2 border-2 border-blue-500 px-4 rounded-xl font-bold">
                     <AcademicCapIcon className="h-8 w-8 text-blue-500" />
                     LearnT
@@ -133,7 +139,7 @@ const LandingPage = () => {
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-md leading-6 text-gray-600 ring-1 ring-gray-900/30 hover:ring-gray-900/30">
               Teach, inspire, and grow with LearnT online leaning platform.
-              <Link to="/#" className="font-semibold text-indigo-600">
+              <Link to={Tutor} className="font-semibold text-indigo-600">
                 Join Our Team <span aria-hidden="true">&rarr;</span>
               </Link>
             </div>

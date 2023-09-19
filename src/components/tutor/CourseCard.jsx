@@ -1,8 +1,8 @@
 import { Badge } from "flowbite-react";
-import React from "react";
 import { Link } from "react-router-dom";
 import timeAgo from "../../utils/timeAgo";
 import Loading from "../common/Loading";
+import { TutorViewCourse } from "../../api/link";
 
 export default function CourseCard({ courses, loading }) {
   return (
@@ -11,7 +11,7 @@ export default function CourseCard({ courses, loading }) {
         {courses.length ? (
           !loading ? (
             courses.map((course) => (
-              <Link to={`/tutor/courses/${course._id}`} key={course._id}>
+              <Link to={TutorViewCourse(course._id)} key={course._id}>
                 <div className="w-full max-w-xs block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-10">
                   <div className="overflow-hidden">
                     <img
