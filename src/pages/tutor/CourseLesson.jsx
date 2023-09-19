@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../components/common/Loading";
 import SectionTitle from "../../components/common/SectionTitle";
 import HorizontalRule from "../../components/common/HorizontalRule";

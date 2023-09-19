@@ -1,4 +1,3 @@
-import React from "react";
 import CardOne from "../../components/admin/CardOne";
 import ChartOne from "../../components/admin/ChartOne";
 import ChartTwo from "../../components/admin/ChartTwo";

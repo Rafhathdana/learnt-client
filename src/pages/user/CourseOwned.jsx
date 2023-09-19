@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileLayout from "../../components/common/ProfileLayout";
 import PageInfo from "../../components/common/PageInfo";
 import Loading from "../../components/common/Loading";
@@ -77,7 +77,7 @@ export default function CourseOwned() {
             </>
           ) : (
             <>
-              <p>you haven't enrolled for any courses yet</p>
+              <p>you havent enrolled for any courses yet</p>
             </>
           )}
         </div>
