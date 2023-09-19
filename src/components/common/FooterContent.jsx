@@ -1,6 +1,14 @@
 import { Footer } from "flowbite-react";
 import React from "react";
 import Logo from "./Logo";
+import {
+  Tutor,
+  About,
+  Contact,
+  Licensing,
+  PrivacyPolicy,
+  Home,
+} from "../../api/link";
 
 function FooterContent({ tutor = false }) {
   return (
@@ -9,15 +17,15 @@ function FooterContent({ tutor = false }) {
         <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
           <Logo size={1.5} tutor={tutor} />
           <Footer.LinkGroup>
-            <Footer.Link href="#">About</Footer.Link>
-            <Footer.Link href="#">Privacy Policy</Footer.Link>
-            <Footer.Link href="#">Licensing</Footer.Link>
-            <Footer.Link href="#">Contact</Footer.Link>
+            <Footer.Link href={About}>About</Footer.Link>
+            <Footer.Link href={PrivacyPolicy}>Privacy Policy</Footer.Link>
+            <Footer.Link href={Licensing}>Licensing</Footer.Link>
+            <Footer.Link href={Contact}>Contact</Footer.Link>
           </Footer.LinkGroup>
         </div>
         <Footer.Divider />
         <Footer.Copyright
-          href={tutor ? "/tutor" : "/"}
+          href={tutor ?  Tutor  : Home}
           by="LearnT Learning"
           year={new Date().getFullYear()}
         />

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Admin, Tutor, User } from "../../api/link";
 
 const PageInfo = ({ pageName, tutor = false, admin = false }) => {
   return (
@@ -9,7 +10,7 @@ const PageInfo = ({ pageName, tutor = false, admin = false }) => {
       <nav>
         <ol className="flex items-center gap-2">
           <li>
-            <Link to={`${tutor ? "tutor" : admin ? "/admin`" : "/user"} `}>
+            <Link to={`${tutor ? Tutor : admin ? Admin : User} `}>
               Home
             </Link>
           </li>

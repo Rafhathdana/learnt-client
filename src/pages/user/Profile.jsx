@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import profileSchema from "../../utils/validation/profile.schema";
 import { getUserDetailsAPI, updateUserDetailsAPI } from "../../api/user";
 import { toast } from "react-hot-toast";
+import { Dumy } from "../../api/link";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -437,7 +438,7 @@ export default function Profile() {
               </div>
               <Switch.Label className="text-sm leading-6 text-gray-600">
                 By selecting this, you agree to make your{" "}
-                <a href="#" className="font-semibold text-indigo-600">
+                <a href={Dumy} className="font-semibold text-indigo-600">
                   profile&nbsp;public
                 </a>
                 .

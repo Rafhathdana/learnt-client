@@ -1,6 +1,7 @@
 import React from "react";
 import Counter from "../utils/Counter";
 import { Link } from "react-router-dom";
+import { Contact } from "../api/link";
 
 export default function NotFound() {
   return (
@@ -23,7 +24,7 @@ export default function NotFound() {
             >
               Go Back Home
             </Link>
-            <Link to="/contact" className="text-sm font-semibold text-grey-900">
+            <Link to={Contact} className="text-sm font-semibold text-grey-900">
               Contact support<span aria-hidden="true">%rarr;</span>
             </Link>
           </div>

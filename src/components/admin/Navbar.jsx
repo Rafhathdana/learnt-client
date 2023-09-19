@@ -3,22 +3,33 @@ import React from "react";
 import Logo from "../common/Logo";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {
+  Admin,
+  AdminManageTutor,
+  AdminManageUser,
+  AdminProfile,
+  AdminSales,
+  AdminSignIn,
+  Tutor,
+  TutorContact,
+  User,
+} from "../../api/link";
 
 function Navbar() {
   const { pathname } = useLocation();
   const admin = useSelector((state) => state.admin);
   const normalnav = [
-    { name: "Home", href: "/admin" },
-    { name: "Learn", href: "/user" },
-    { name: "Teach", href: "/tutor" },
-    { name: "Contact", href: "/tutor/contact" },
+    { name: "Home", href: Admin },
+    { name: "Learn", href: User },
+    { name: "Teach", href: Tutor },
+    { name: "Contact", href: TutorContact },
   ];
   const adminnav = [
-    { name: "Home", href: "/admin" },
-    { name: "Manage User", href: "/user/manage" },
-    { name: "Create Tutor", href: "/tutor/manage" },
-    { name: "sales", href: "/sales/manage" },
-    { name: "Profile", href: "/admin/profile" },
+    { name: "Home", href: Admin },
+    { name: "Manage User", href: AdminManageUser },
+    { name: "Manage Tutor", href: AdminManageTutor },
+    { name: "sales", href: AdminSales },
+    { name: "Profile", href: AdminProfile },
   ];
   const navitems = admin?.loggedIn ? adminnav : normalnav;
   return (
@@ -27,12 +38,12 @@ function Navbar() {
       fluid={true}
       rounded={true}
     >
-      <Logo className="mr-3" to={"/admin"} size={1.3} admin />
+      <Logo className="mr-3" to={Admin} size={1.3} admin />
       <div className="flex md:order-2">
         {admin.loggedIn ? (
           ""
         ) : (
-          <Link to={`signin?from=${pathname}`}>
+          <Link to={AdminSignIn(pathname)}>
             <Button className="bg-green-500 hover:bg-green-300">
               Sign In{" "}
             </Button>

@@ -15,6 +15,7 @@ import { getAllCategoriesAPI, getAllCourseByFilter } from "../../api/common";
 import { Badge } from "flowbite-react";
 import timeAgo from "../../utils/timeAgo";
 import Pagination from "../../components/common/Pagination";
+import { Dumy, UserCourse } from "../../api/link";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -471,7 +472,7 @@ export default function Explore() {
                               className="w-full max-w-xs block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-5"
                             >
                               <div className="overflow-hidden">
-                                <Link to={`/courses/${course._id}`}>
+                                <Link to={UserCourse(course._id)}>
                                   <img
                                     src={course.thumbnailURL}
                                     alt="Product Image"
@@ -480,7 +481,7 @@ export default function Explore() {
                                 </Link>
                               </div>
                               <div className="px-5 pb-5 flex flex-col justify-end">
-                                <Link to="#">
+                                <Link to={Dumy}>
                                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white pt-4 nexa-font">
                                     {course.title}
                                   </h5>

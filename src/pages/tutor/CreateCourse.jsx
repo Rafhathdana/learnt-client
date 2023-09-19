@@ -8,6 +8,7 @@ import { PhotoIcon } from "@heroicons/react/24/outline";
 import courseSchema from "../../utils/validation/course.schema";
 import { createCourseAPI } from "../../api/tutor";
 import { getAllCategoriesAPI } from "../../api/common";
+import { Dumy } from "../../api/link";
 
 export default function CreateCourse() {
   const [categories, setCategories] = useState([]);
@@ -354,7 +355,7 @@ export default function CreateCourse() {
                 className="w-full max-w-sm block hover:shadow-lg duration-300 bg-white border overflow-hidden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-10"
               >
                 <div className="overflow-hidden">
-                  <Link to="#">
+                  <Link to={Dumy}>
                     <img
                       src={
                         imagePreviewURL
@@ -368,7 +369,7 @@ export default function CreateCourse() {
                   </Link>
                 </div>
                 <div className="px-5 pb-5">
-                  <Link to="#">
+                  <Link to={Dumy}>
                     <h5 className="text-xl font-semibold tracking-tight text-gray-400 dark:text-white nexa-font">
                       {watch("title") ? watch("title") : "Attractive Title"}
                     </h5>

@@ -8,7 +8,6 @@ import {
   CreateCourse,
   ManageCourse,
   Tutor,
-  TutorAbout,
   TutorContact,
   TutorDashboard,
   TutorProfile,
@@ -22,7 +21,6 @@ function Navbar() {
   const normalnav = [
     { name: "Home", href: Tutor },
     { name: "Learn", href: User },
-    { name: "About", href: TutorAbout },
     { name: "Contact", href: TutorContact },
   ];
   const tutornav = [

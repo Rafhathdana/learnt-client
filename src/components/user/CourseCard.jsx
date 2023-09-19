@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Badge } from "flowbite-react";
 import timeAgo from "../../utils/timeAgo";
 import { getAllCoursesAPI } from "../../api/common";
+import { UserCourse } from "../../api/link";
 export default function CourseCard() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function CourseCard() {
             className="w-full max-w-70 block hover:shadow-lg duration-300 bg-white border overflow-hiddden border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-5"
           >
             <div className="overflow-hidden">
-              <Link to={`/courses/${course._id}`}>
+              <Link to={UserCourse(course._id)}>
                 <img
                   className="rounded-t-lg duraction-300 scale-105 hover:scale-100 min-h-[12rem] object-cover aspect-video"
                   src={course.thumbnailURL}
@@ -38,7 +39,7 @@ export default function CourseCard() {
               </Link>
             </div>
             <div className="px-5 pb-3 nexa-font">
-              <Link to={`/courses/${course._id}`}>
+              <Link to={UserCourse(course._id)}>
                 <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white pt-4 nexa-font">
                   {course.title}
                 </h5>
