@@ -1,4 +1,3 @@
-import React from "react";
 import Counter from "../utils/Counter";
 import { Link } from "react-router-dom";
 import { Contact } from "../api/link";

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Pagination({ page, total, limit, setPage }) {
   const totalPages = Math.ceil(total / limit);
 
@@ -100,11 +98,11 @@ export default function Pagination({ page, total, limit, setPage }) {
             </>
           ) : (
             <div className="flex justify-center w-full">
-            <p className="text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2">
-              {page}
-            </p>
-          </div>
-        )}
+              <p className="text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2">
+                {page}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
