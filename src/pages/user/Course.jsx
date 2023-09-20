@@ -342,13 +342,13 @@ export default function Course() {
                     >
                       Get Course
                     </Payment>
-                    <button
+                    {/* <button
                       onClick={() => setIsOpen(!isOpen)}
                       className="mt-2 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                       Fake Buy
-                    </button>
-
+                    </button> */}
+                    {/* 
                     <Modal
                       isOpen={isOpen}
                       setIsOpen={setIsOpen}
@@ -358,7 +358,7 @@ export default function Course() {
                           'By Clicking "Confirm" you are accepting Learnt payment procedures and proceed to payment',
                         onClick: () => handleEnrollCourse(course._id, "fake"),
                       }}
-                    />
+                    /> */}
                     <p className="mt-6 text-xs leading-5 text-gray-600">
                       Invoices and receipts available for easy company
                       reimbursement
