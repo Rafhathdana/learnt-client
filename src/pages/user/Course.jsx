@@ -165,7 +165,7 @@ export default function Course() {
                     >
                       Lessons
                     </Tab>
-
+                    {/* 
                     <Tab
                       className={({ selected }) =>
                         classNames(
@@ -178,7 +178,7 @@ export default function Course() {
                       }
                     >
                       Instructor
-                    </Tab>
+                    </Tab> */}
                   </Tab.List>
                   <Tab.Panels className="mt-2">
                     <Tab.Panel
