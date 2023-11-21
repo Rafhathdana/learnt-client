@@ -89,30 +89,30 @@ export default function Course() {
               description="get an overview of the course here"
             />
             <HorizontalRule />
-            <div className="flex justify-around px-20 mt-10 bg-white rounded-xl p-10">
+            <div className="flex justify-around sm:px-10 md:px-15 lg:px-20 mt-10 bg-white rounded-xl sm:p-5 md:p-10">
               <div className="flex justify-center items-center">
-                <span className="text-xl text-center px-4 text-gray-400">
+                <span className="text-sm text-center px-4 text-gray-400 md:text-lg">
                   Instructor
                   <HorizontalRule />
-                  <h1 className="text-xl text-amber-500">
+                  <h1 className="text-sm text-amber-500 md:text-lg">
                     {course?.tutor?.name}
                   </h1>
                 </span>
                 <img
                   src="https://secure.gravatar.com/avatar/c98bb1db01e83b0183281b6aa6173647?s=250&d=mm&r=g"
                   alt="profile picture"
-                  className="rounded-full w-20"
+                  className="rounded-full w-10 sm:w-10 md:w-15 lg:w-20"
                 />
               </div>
               <div className="flex flex-row-reverse justify-center items-center">
-                <div className="text-xl text-center px-4 text-gray-400">
+                <div className="text-sm text-center px-4 text-gray-400 md:text-lg">
                   Category
                   <hr />
-                  <span className="text-xl text-amber-500">
+                  <span className="text-sm text-amber-500  md:text-lg">
                     {course?.category || "programming"}
                   </span>
                 </div>
-                <CodeBracketIcon className="w-10" />
+                <CodeBracketIcon className="sm:w-6 md:w-7 lg:w-10" />
               </div>
             </div>
             <div className="bg-white flex p-3 my-3 rounded-lg">
@@ -133,7 +133,7 @@ export default function Course() {
             </div>
             <div className="flex justify-center bg-white rounded-xl mt-2">
               <div
-                className="w-full px-2 py-2sm:px-4"
+                className="w-full px-2 py-2 sm:px-4"
                 style={{ minHeight: "31rem" }}
               >
                 <Tab.Group>
@@ -190,11 +190,15 @@ export default function Course() {
                       <ul>
                         <li>
                           {" "}
-                          <div className="p-5">
-                            <div className="ml-5 flex justify-between">
+                          <div className="sm:p-2 md:p-3 lg:p-5">
+                            <div className="sm:ml-1 md:ml-3 lg:ml-5 flex justify-between">
                               <div>
-                                <h3 className="text-3xl">{course.title}</h3>
-                                <h3 className="text-md text-gray-500">
+                                <h3 className="sm:text-2xl md:text-2xl lg:text-3xl">
+                                  {course.title.charAt(0).toUpperCase() +
+                                    course.title.slice(1)}
+                                </h3>
+
+                                <h3 className="sm:text-sm md:text-md text-gray-500">
                                   {course.tagline}
                                 </h3>
                               </div>
@@ -233,13 +237,13 @@ export default function Course() {
                     >
                       <ul>
                         <li>
-                          <div className="p-5">
-                            <div className="ml-5 flex justify-between">
+                          <div className="sm:p-2 md:p-3 lg:p-5">
+                            <div className="sm:ml-1 md:ml-3 lg:ml-5 flex justify-between">
                               <div>
-                                <h3 className="text-3xl">
+                                <h3 className="sm:text-xl md:text-2xl lg:text-3xl">
                                   Total Lessons - {course?.lessons?.length}
                                 </h3>
-                                <h3 className="text-md text-gray-500">
+                                <h3 className="sm:text-sm md:text-md text-gray-500">
                                   {course.tagline}
                                 </h3>
                               </div>
@@ -263,12 +267,22 @@ export default function Course() {
                                   >
                                     {({ open }) => (
                                       <>
-                                        <Disclosure.Button className="flex w-full justify-between rounded-lg bg-indigo-100 px-4 py-3 text-left text-sm font-medium text-purple-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                          <span>
-                                            {index + 1}. {lesson.title}
-                                          </span>
+                                        <Disclosure.Button className="w-full justify-between rounded-lg bg-indigo-100 px-4 py-3 text-left text-sm font-medium text-purple-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                                           <div className="flex items-center gap-2">
-                                            <div>{lesson.duration / 60}:00</div>
+                                            {/* First line - left-aligned */}
+                                            <span>{index + 1}</span>
+                                            <span>{lesson.title}</span>
+                                          </div>
+
+                                          <div className="flex items-center gap-2">
+                                            {/* Second line - right-aligned */}
+                                            <div className="ml-auto">
+                                              {(lesson.duration / 60).toFixed(
+                                                2
+                                              )}
+                                              :00
+                                            </div>
+
                                             <ChevronUpIcon
                                               className={`${
                                                 open
@@ -278,6 +292,7 @@ export default function Course() {
                                             />
                                           </div>
                                         </Disclosure.Button>
+
                                         <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500 flex justify-between">
                                           <div className="flex">
                                             <LockClosedIcon className="w-4 mr-2 mb-2" />
@@ -327,7 +342,7 @@ export default function Course() {
                       Pay once , own it forever
                     </p>
                     <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                      <span className="text-5xl font-bold tracking-tight text-gray-900">
+                      <span className="sm:text-xl md:text-2xl lg:text-5xl font-bold tracking-tight text-gray-900">
                         ₹{course?.price}
                       </span>
                       <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
