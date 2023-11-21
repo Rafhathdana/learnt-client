@@ -41,7 +41,7 @@ export default function SignIn() {
       toast.dismiss();
       toast.error("Session timeout!,Please Login again");
     }
-  });
+  }, []);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
