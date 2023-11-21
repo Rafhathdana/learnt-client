@@ -17,7 +17,6 @@ export default function SignIn() {
   const newAdmin = searchParams.get("new");
   const logout = searchParams.get("logout");
   useEffect(() => {
-    console.log(admin);
     if (admin.loggedIn) {
       navigate("/admin");
     }
@@ -43,7 +42,7 @@ export default function SignIn() {
       toast.dismiss();
       toast.error("Session timeout!,Please Login again");
     }
-  });
+  }, []);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -52,7 +51,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const handleSignIn = (e) => {
     e.preventDefault();
-
+    e.preventDefault();
     adminSignInAPI(formValues)
       .then((response) => {
         localStorage.setItem("isAdminAuth", true);

@@ -5,6 +5,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { userSignInAPI } from "../../api/user";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice";
+import GoogleSignIn from "../../components/user/GoogleSignIn";
 
 export default function SignIn() {
   const user = useSelector((state) => state.user);
@@ -41,13 +42,13 @@ export default function SignIn() {
       toast.dismiss();
       toast.error("Session timeout!,Please Login again");
     }
-  });
+  }, []);
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const handleSignIn = (e) => {
     e.preventDefault();
     userSignInAPI(formValues)
@@ -146,7 +147,7 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className={`flex justify-center ${error ? '' : 'hidden'}`} >
               <span className="text-red-400 text-center font-bold nexa-font">
                 {error}
               </span>
@@ -155,18 +156,16 @@ export default function SignIn() {
               <button
                 type="submit"
                 onClick={handleSignIn}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1 5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full mt-5 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
             </div>
+            <GoogleSignIn />
           </form>
           <p className="mt-10 text-center text-xs text-gray-500">
             Ready to start exploring new perspectives?
-            <Link
-              to="../signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
+            <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Create An Account
             </Link>
           </p>
