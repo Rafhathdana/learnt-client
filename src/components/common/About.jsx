@@ -40,7 +40,7 @@ export default function About({ tutor = false }) {
           </blockquote>
           <figcaption className="mt-10">
             <img
-              src="https://media.licdn.com/dms/image/D5635AQGbO-sqksdIMw/profile-framedphoto-shrink_400_400/0/1668833332857?e=1695582000&v=beta&t=oYVWwe6QQpP9S_jEmhv4Wg7vTmc7QzSU2D9Za69ubf4"
+              src="/ceo.png"
               alt="image"
               className="mx-auto h-14 w-14 rounded-full"
             />

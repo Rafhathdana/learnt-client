@@ -6,6 +6,7 @@ import { userSignInAPI } from "../../api/user";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../features/userSlice";
 import GoogleSignIn from "../../components/user/GoogleSignIn";
+import GithubSignIn from "../../components/user/GithubSignIn";
 
 export default function SignIn() {
   const user = useSelector((state) => state.user);
@@ -53,25 +54,23 @@ export default function SignIn() {
     e.preventDefault();
     userSignInAPI(formValues)
       .then((response) => {
-        localStorage.setItem("isAuth", true);
-        toast.success(
-          `Hey ${response.data.user.name}, Welcome back To Learnt!`,
-          {
-            duration: 6000,
-          }
-        );
-        dispatch(
-          setUser({ ...response.data?.user, userId: response.data.user._id })
-        );
-        if (fromLocation) {
-          return navigate(fromLocation);
-        }
-        return navigate("/user");
+        handleSignInSuccess(response.data.user);
       })
       .catch((err) => {
         console.log(err);
         setError(err?.response?.data?.errors?.message);
       });
+  };
+  const handleSignInSuccess = (user) => {
+    localStorage.setItem("isAuth", true);
+    toast.success(`Hey ${user.name}, Welcome back To Learnt!`, {
+      duration: 6000,
+    });
+    dispatch(setUser({ ...user, userId: user._id }));
+    if (fromLocation) {
+      return navigate(fromLocation);
+    }
+    return navigate("/user");
   };
   return (
     <>
@@ -147,7 +146,7 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            <div className={`flex justify-center ${error ? '' : 'hidden'}`} >
+            <div className={`flex justify-center ${error ? "" : "hidden"}`}>
               <span className="text-red-400 text-center font-bold nexa-font">
                 {error}
               </span>
@@ -161,11 +160,20 @@ export default function SignIn() {
                 Sign in
               </button>
             </div>
-            <GoogleSignIn />
+            <div className="flex justify-center">
+              {/* Google sign in */}
+              <GoogleSignIn handleSignInSuccess={handleSignInSuccess} />
+
+              {/* Github sign in */}
+              <GithubSignIn handleSignInSuccess={handleSignInSuccess} />
+            </div>
           </form>
           <p className="mt-10 text-center text-xs text-gray-500">
             Ready to start exploring new perspectives?
-            <Link to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link
+              to="/signup"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
               Create An Account
             </Link>
           </p>
