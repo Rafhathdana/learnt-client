@@ -1,37 +1,30 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import firebase from "../../utils/firebase";
-function GoogleSignIn() {
-  const initializeGoogleSignIn = () => {
+import { verifyFirebaseSignIn } from "../../api/common";
+import { toast } from "react-hot-toast";
+function GoogleSignIn({ handleSignInSuccess }) {
+  const initializeGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    provider.addScope("profile");
-    provider.addScope("email");
     const auth = getAuth(firebase);
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        console.log(credential);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const token = await result.user.getIdToken();
+      const response = await verifyFirebaseSignIn(token);
+      handleSignInSuccess(response.data.user);
+    } catch (error) {
+      // show error message from server if present
+      if (error?.response?.data?.errors?.message) {
+        toast.error(error.response.data.errors.message);
+      } else {
+        console.log("unexpected error in google signin", error);
+      }
+    }
   };
+
   return (
     <button
       type="button"
-      className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
+      className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
       onClick={initializeGoogleSignIn}
     >
       <svg
@@ -51,5 +44,4 @@ function GoogleSignIn() {
     </button>
   );
 }
-
 export default GoogleSignIn;

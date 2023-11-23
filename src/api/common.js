@@ -11,10 +11,15 @@ const getAllCourseByFilter = (data) => {
 const getLessonDetailsAPI = (lessonId) => {
   return API.get(`/user/lessons/${lessonId}`);
 };
-
+const verifyFirebaseSignIn = (token) => {
+  return API.post("/auth/signin/firebase/verify", {
+    token: token,
+  });
+};
 export {
   getAllCategoriesAPI,
   getAllCoursesAPI,
   getAllCourseByFilter,
   getLessonDetailsAPI,
+  verifyFirebaseSignIn,
 };
