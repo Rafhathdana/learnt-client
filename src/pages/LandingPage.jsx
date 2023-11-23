@@ -165,7 +165,7 @@ const LandingPage = () => {
               Launch into learning
             </Link>
             <Link
-              to="/#"
+              to="/user#about"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
               Learn more <span aria-hidden="true">&rarr;</span>

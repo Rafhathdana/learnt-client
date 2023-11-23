@@ -8,7 +8,15 @@ pnpm-debug.log*
 lerna-debug.log*
 .env
 node_modules
+<<<<<<< HEAD
+<<<<<<< Updated upstream
 dist
+=======
+# dist
+>>>>>>> Stashed changes
+=======
+# dist
+>>>>>>> a8c131242f9e2006fc571f311aa180319fcd6ac8
 dist-ssr
 *.local
 
