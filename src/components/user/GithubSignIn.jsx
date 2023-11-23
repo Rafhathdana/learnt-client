@@ -10,7 +10,6 @@ function GithubSignIn({ handleSignInSuccess }) {
     try {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user.getIdToken();
-      console.log(token + "yrtgfvdg");
       const response = await verifyFirebaseSignIn(token);
       handleSignInSuccess(response.data.user);
     } catch (error) {
