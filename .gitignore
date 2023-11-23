@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 <<<<<<< HEAD
 <<<<<<< Updated upstream
-dist
+# dist
 =======
 # dist
 >>>>>>> Stashed changes
