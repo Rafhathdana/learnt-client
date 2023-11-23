@@ -1,9 +1,7 @@
-import React from "react";
 import { GithubAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import firebase from "../../config/firebase";
+import firebase from "../../utils/firebase";
 import { toast } from "react-hot-toast";
 import { verifyFirebaseSignIn } from "../../api/common";
-
 function GithubSignIn({ handleSignInSuccess }) {
   const initializeGithubSignIn = async () => {
     const provider = new GithubAuthProvider();
@@ -12,6 +10,7 @@ function GithubSignIn({ handleSignInSuccess }) {
     try {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user.getIdToken();
+      console.log(token + "yrtgfvdg");
       const response = await verifyFirebaseSignIn(token);
       handleSignInSuccess(response.data.user);
     } catch (error) {
